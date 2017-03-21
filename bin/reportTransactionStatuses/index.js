@@ -23,16 +23,18 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        const queueAdapter = sskts.adapter.queue(mongoose.connection);
         const transactionAdapter = sskts.adapter.transaction(mongoose.connection);
         debug('creating a report...');
-        const report = yield sskts.service.report.transactionStatuses()(transactionAdapter);
+        const report = yield sskts.service.report.transactionStatuses()(queueAdapter, transactionAdapter);
         yield sskts.service.notification.report2developers('現在の取引集計', `
 date： ${moment().toISOString()}\n
 \n
-取引在庫数: ${report.nubmerOfTransactionsReady}\n
-進行中取引数: ${report.nubmerOfTransactionsUnderway}\n
-キュー未エクスポートの成立済み取引数: ${report.nubmerOfTransactionsClosedWithQueuesUnexported}\n
-キュー未エクスポートの期限切れ取引数: ${report.nubmerOfTransactionsExpiredWithQueuesUnexported}\n
+取引在庫数: ${report.numberOfTransactionsReady}\n
+進行中取引数: ${report.numberOfTransactionsUnderway}\n
+キュー未エクスポートの成立済み取引数: ${report.numberOfTransactionsClosedWithQueuesUnexported}\n
+キュー未エクスポートの期限切れ取引数: ${report.numberOfTransactionsExpiredWithQueuesUnexported}\n
+未実行キュー数: ${report.numberOfQueuesUnexecuted}\n
 `)();
         mongoose.disconnect();
     });
