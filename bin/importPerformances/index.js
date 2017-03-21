@@ -15,25 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
+const moment = require("moment");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
 const debug = createDebug('sskts-api:*');
-// 複数劇場導入に対応のつもり todo 環境設定
-const theaterCodes = [
-    '118'
-];
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const filmRepo = sskts.adapter.film(mongoose.connection);
-        const screenRepo = sskts.adapter.screen(mongoose.connection);
-        const performanceRepo = sskts.adapter.performance(mongoose.connection);
-        const promises = theaterCodes.map((theaterCode) => __awaiter(this, void 0, void 0, function* () {
+        // todo インポート期間調整
+        const IMPORT_TERMS_IN_DAYS = 7;
+        const theaterAdapter = sskts.adapter.theater(mongoose.connection);
+        const filmAdapter = sskts.adapter.film(mongoose.connection);
+        const screenAdapter = sskts.adapter.screen(mongoose.connection);
+        const performanceAdapter = sskts.adapter.performance(mongoose.connection);
+        const theaterIds = yield theaterAdapter.model.distinct('_id').exec();
+        const promises = theaterIds.map((theaterId) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing performances...');
-                // todo 日付調整
-                yield sskts.service.master.importPerformances(theaterCode, '20170201', '20170401')(filmRepo, screenRepo, performanceRepo);
+                yield sskts.service.master.importPerformances(theaterId, moment().format('YYYYMMDD'), moment().add(IMPORT_TERMS_IN_DAYS, 'days').format('YYYYMMDD'))(filmAdapter, screenAdapter, performanceAdapter);
                 debug('performances imported.');
             }
             catch (error) {

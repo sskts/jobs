@@ -18,20 +18,17 @@ const createDebug = require("debug");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
 const debug = createDebug('sskts-api:*');
-// 複数劇場導入に対応のつもり todo 環境設定
-const theaterCodes = [
-    '118'
-];
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const theaterRepo = sskts.adapter.theater(mongoose.connection);
-        const screenRepo = sskts.adapter.screen(mongoose.connection);
-        const promises = theaterCodes.map((theaterCode) => __awaiter(this, void 0, void 0, function* () {
+        const theaterAdapter = sskts.adapter.theater(mongoose.connection);
+        const screenAdapter = sskts.adapter.screen(mongoose.connection);
+        const theaterIds = yield theaterAdapter.model.distinct('_id').exec();
+        const promises = theaterIds.map((theaterId) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing screens...');
-                yield sskts.service.master.importScreens(theaterCode)(theaterRepo, screenRepo);
+                yield sskts.service.master.importScreens(theaterId)(theaterAdapter, screenAdapter);
                 debug('screens imported.');
             }
             catch (error) {

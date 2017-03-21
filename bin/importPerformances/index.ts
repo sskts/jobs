@@ -5,29 +5,33 @@
  */
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
+import * as moment from 'moment';
 import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-api:*');
 
-// 複数劇場導入に対応のつもり todo 環境設定
-const theaterCodes = [
-    '118'
-];
-
 async function main() {
     debug('connecting mongodb...');
     mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
-    const filmRepo = sskts.adapter.film(mongoose.connection);
-    const screenRepo = sskts.adapter.screen(mongoose.connection);
-    const performanceRepo = sskts.adapter.performance(mongoose.connection);
-    const promises = theaterCodes.map(async (theaterCode) => {
+    // todo インポート期間調整
+    const IMPORT_TERMS_IN_DAYS = 7;
+    const theaterAdapter = sskts.adapter.theater(mongoose.connection);
+    const filmAdapter = sskts.adapter.film(mongoose.connection);
+    const screenAdapter = sskts.adapter.screen(mongoose.connection);
+    const performanceAdapter = sskts.adapter.performance(mongoose.connection);
+
+    const theaterIds = <string[]>await theaterAdapter.model.distinct('_id').exec();
+    const promises = theaterIds.map(async (theaterId) => {
         try {
             debug('importing performances...');
-            // todo 日付調整
-            await sskts.service.master.importPerformances(theaterCode, '20170201', '20170401')(filmRepo, screenRepo, performanceRepo);
+            await sskts.service.master.importPerformances(
+                theaterId,
+                moment().format('YYYYMMDD'),
+                moment().add(IMPORT_TERMS_IN_DAYS, 'days').format('YYYYMMDD')
+            )(filmAdapter, screenAdapter, performanceAdapter);
             debug('performances imported.');
         } catch (error) {
             console.error(error);
