@@ -1,0 +1,48 @@
+{
+  "author": {
+    "name": "Motionpicture co.,ltd."
+  },
+  "contributors": [
+    {
+      "name": "Tetsu Yamazaki",
+      "email": "yamazaki@motionpicture.jp"
+    }
+  ],
+  "dependencies": {
+    "@motionpicture/sskts-domain": "^7.0.4",
+    "debug": "^2.6.3",
+    "moment": "^2.18.0"
+  },
+  "description": "This is a repogitory for SSKTS jobs.",
+  "devDependencies": {
+    "@types/debug": "0.0.29",
+    "@types/mocha": "^2.2.40",
+    "ink-docstrap": "^1.3.0",
+    "jsdoc": "^3.4.3",
+    "mocha": "^3.2.0",
+    "nsp": "^2.6.3",
+    "rimraf": "^2.6.1",
+    "tslint": "^4.5.1",
+    "tslint-microsoft-contrib": "^4.0.1",
+    "typescript": "^2.2.1"
+  },
+  "engines": {
+    "node": ">=6.9.1",
+    "npm": ">=3.10.8"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "name": "sskts-jobs",
+  "private": true,
+  "repository": {},
+  "scripts": {
+    "build": "tsc",
+    "check": "tslint --type-check --project tsconfig.json -c tslint.json bin/**/*.ts && nsp check",
+    "clean": "rimraf bin/**/*.js examples/**/*.js test/**/*.js docs/**/* npm-debug.log*",
+    "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
+    "test": "npm run check && mocha --no-timeouts --recursive",
+    "preversion": "npm run clean && npm run build && npm test",
+    "version": "git add -A",
+    "postversion": "git push origin"
+  }
+}
