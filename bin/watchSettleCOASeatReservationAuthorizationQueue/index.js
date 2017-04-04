@@ -22,6 +22,7 @@ let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
 const assetAdapter = sskts.adapter.asset(mongoose.connection);
+const ownerAdapter = sskts.adapter.owner(mongoose.connection);
 const queueAdapter = sskts.adapter.queue(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -29,7 +30,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.queue.executeSettleCOASeatReservationAuthorization()(assetAdapter, queueAdapter);
+        yield sskts.service.queue.executeSettleCOASeatReservationAuthorization()(assetAdapter, ownerAdapter, queueAdapter);
     }
     catch (error) {
         console.error(error.message);
