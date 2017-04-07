@@ -40,6 +40,7 @@ set GMO_ENDPOINT=**********gmo apiのエンドポイント**********
 set COA_ENDPOINT=**********coa apiのエンドポイント**********
 set COA_REFRESH_TOKEN=**********coa apiのリフレッシュトークン**********
 set SSKTS_DEVELOPER_EMAIL=**********本apiで使用される開発者メールアドレス**********
+set NUMBER_OF_TRANSACTIONS_PER_MINUTES=**********毎分生成される取引IDの数**********
 ```
 
 only on Aure WebApps

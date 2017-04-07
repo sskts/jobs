@@ -18,8 +18,11 @@ const createDebug = require("debug");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
 const debug = createDebug('sskts-api:bin:prepareTransactions');
-const NUMBER_OF_TRANSACTIONS_PER_TASK = 300; // 1タスクで生成する取引数
-const EXPIRES_IN_SECONDS = 300; // 生成した取引がREADYステータスのままで期限切れするまでの時間
+// 1タスクで生成する取引数
+const NUMBER_OF_TRANSACTIONS_PER_TASK = 
+// tslint:disable-next-line:no-magic-numbers
+(process.env.NUMBER_OF_TRANSACTIONS_PER_MINUTES !== undefined) ? parseInt(process.env.NUMBER_OF_TRANSACTIONS_PER_MINUTES, 10) : 120;
+const EXPIRES_IN_SECONDS = 60; // 生成した取引がREADYステータスのままで期限切れするまでの時間
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');

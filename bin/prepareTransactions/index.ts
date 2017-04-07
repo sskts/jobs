@@ -10,8 +10,11 @@ import * as mongoose from 'mongoose';
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-api:bin:prepareTransactions');
-const NUMBER_OF_TRANSACTIONS_PER_TASK = 300; // 1タスクで生成する取引数
-const EXPIRES_IN_SECONDS = 300; // 生成した取引がREADYステータスのままで期限切れするまでの時間
+// 1タスクで生成する取引数
+const NUMBER_OF_TRANSACTIONS_PER_TASK =
+    // tslint:disable-next-line:no-magic-numbers
+    (process.env.NUMBER_OF_TRANSACTIONS_PER_MINUTES !== undefined) ? parseInt(process.env.NUMBER_OF_TRANSACTIONS_PER_MINUTES, 10) : 120;
+const EXPIRES_IN_SECONDS = 60; // 生成した取引がREADYステータスのままで期限切れするまでの時間
 
 async function main() {
     debug('connecting mongodb...');
