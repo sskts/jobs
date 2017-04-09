@@ -14,7 +14,7 @@ mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 500;
+const INTERVAL_MILLISECONDS = 250;
 const assetAdapter = sskts.adapter.asset(mongoose.connection);
 const ownerAdapter = sskts.adapter.owner(mongoose.connection);
 const queueAdapter = sskts.adapter.queue(mongoose.connection);

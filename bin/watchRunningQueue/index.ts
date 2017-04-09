@@ -15,7 +15,7 @@ let countRetry = 0;
 let countAbort = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 1000;
+const INTERVAL_MILLISECONDS = 250;
 const RETRY_INTERVAL_MINUTES = 10;
 const queueAdapter = sskts.adapter.queue(mongoose.connection);
 
