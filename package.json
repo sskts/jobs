@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^11.0.3",
+    "@motionpicture/sskts-domain": "^11.0.4",
     "debug": "^2.6.3",
     "moment": "^2.18.1"
   },
@@ -24,7 +24,7 @@
     "rimraf": "^2.6.1",
     "tslint": "^4.5.1",
     "tslint-microsoft-contrib": "^4.0.1",
-    "typescript": "^2.2.2"
+    "typescript": "^2.3.0"
   },
   "engines": {
     "node": ">=6.9.1",
@@ -45,5 +45,5 @@
     "version": "git add -A",
     "postversion": "git push origin"
   },
-  "version": "2.0.7"
+  "version": "2.0.8"
 }
