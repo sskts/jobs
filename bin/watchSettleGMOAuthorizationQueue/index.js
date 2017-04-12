@@ -14,13 +14,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @ignore
  */
 const sskts = require("@motionpicture/sskts-domain");
+const createDebug = require("debug");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
+const debug = createDebug('sskts-jobs:bin:watchSettleGMOAuthorizationQueue');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 1000;
 const queueAdapter = sskts.adapter.queue(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -28,6 +30,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
+        debug('count:', count);
         yield sskts.service.queue.executeSettleGMOAuthorization()(queueAdapter);
     }
     catch (error) {

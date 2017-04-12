@@ -4,9 +4,12 @@
  * @ignore
  */
 import * as sskts from '@motionpicture/sskts-domain';
+import * as createDebug from 'debug';
 import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
+
+const debug = createDebug('sskts-jobs:bin:watchSettleGMOAuthorizationQueue');
 
 (<any>mongoose).Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
@@ -14,7 +17,7 @@ mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 1000;
 const queueAdapter = sskts.adapter.queue(mongoose.connection);
 
 setInterval(
@@ -26,6 +29,7 @@ setInterval(
         count += 1;
 
         try {
+            debug('count:', count);
             await sskts.service.queue.executeSettleGMOAuthorization()(queueAdapter);
         } catch (error) {
             console.error(error.message);
