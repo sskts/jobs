@@ -9,9 +9,9 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/coa-service": "^3.0.0",
-    "@motionpicture/sskts-domain": "^13.0.1",
-    "debug": "^2.6.7",
+    "@motionpicture/coa-service": "^3.0.1",
+    "@motionpicture/sskts-domain": "^13.0.3",
+    "debug": "^2.6.8",
     "moment": "^2.18.1"
   },
   "description": "This is a repogitory for SSKTS jobs.",
@@ -47,5 +47,5 @@
     "version": "git add -A",
     "postversion": "git push origin"
   },
-  "version": "2.0.19"
+  "version": "2.0.20"
 }
