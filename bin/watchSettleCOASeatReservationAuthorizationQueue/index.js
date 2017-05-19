@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * COA仮予約資産移動
+ *
+ * @ignore
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8,11 +13,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * COA仮予約資産移動
- *
- * @ignore
- */
 const sskts = require("@motionpicture/sskts-domain");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
@@ -23,6 +23,7 @@ const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 250;
 const assetAdapter = sskts.adapter.asset(mongoose.connection);
 const ownerAdapter = sskts.adapter.owner(mongoose.connection);
+const performanceAdapter = sskts.adapter.performance(mongoose.connection);
 const queueAdapter = sskts.adapter.queue(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -30,7 +31,8 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.queue.executeSettleCOASeatReservationAuthorization()(assetAdapter, ownerAdapter, queueAdapter);
+        // tslint:disable-next-line:max-line-length
+        yield sskts.service.queue.executeSettleCOASeatReservationAuthorization()(assetAdapter, ownerAdapter, performanceAdapter, queueAdapter);
     }
     catch (error) {
         console.error(error.message);
