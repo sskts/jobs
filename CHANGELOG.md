@@ -7,8 +7,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
-- パフォーマンス在庫状況表現を空席率(%)に変更。
-- package-lock.jsonを追加。
 
 ### Deprecated
 
@@ -17,6 +15,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v3.1.0 - 2017-06-28
+### Changed
+- パフォーマンス在庫状況表現を空席率(%)に変更。
+- package-lock.jsonを追加。
 
 ## v3.0.0 - 2017-06-19
 ### Removed
