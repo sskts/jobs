@@ -20,7 +20,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 1000;
 const assetAdapter = sskts.adapter.asset(mongoose.connection);
 const ownerAdapter = sskts.adapter.owner(mongoose.connection);
 const performanceAdapter = sskts.adapter.performance(mongoose.connection);

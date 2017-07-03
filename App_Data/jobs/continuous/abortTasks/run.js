@@ -20,7 +20,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 500;
 const RETRY_INTERVAL_MINUTES = 10;
 const taskAdapter = sskts.adapter.task(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {

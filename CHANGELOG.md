@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 - 取引からタスクをエクスポートするように変更。具体的には、bin/watchClosedTransactionとbin/watchExpiredTransactionの調整。
 - MongoDBのslow queriesレポートに対応してindexを追加。
+- タスクや取引を監視させるインターバル時間(秒)を調整。1インスタンスあたりの頻度をやや下げる対応。
 
 ### Deprecated
 

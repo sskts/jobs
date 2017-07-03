@@ -17,7 +17,7 @@ mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 let countExecute = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 500;
 const taskAdapter = sskts.adapter.task(mongoose.connection);
 const transactionAdapter = sskts.adapter.transaction(mongoose.connection);
 
