@@ -9,10 +9,10 @@ import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-api:*');
+const debug = createDebug('sskts-jobs:*');
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let countRetry = 0;
 

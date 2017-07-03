@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * タスク中止
+ *
+ * @ignore
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8,34 +13,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * 期限切れ取引監視
- *
- * @ignore
- */
 const sskts = require("@motionpicture/sskts-domain");
-const createDebug = require("debug");
 const mongoose = require("mongoose");
-const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:*');
+const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-let countExecute = 0;
+let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 250;
+const RETRY_INTERVAL_MINUTES = 10;
 const taskAdapter = sskts.adapter.task(mongoose.connection);
-const transactionAdapter = sskts.adapter.transaction(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    countExecute += 1;
+    count += 1;
     try {
-        debug('exporting queues...');
-        yield sskts.service.transaction.exportQueues(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
+        yield sskts.service.task.abort(RETRY_INTERVAL_MINUTES)(taskAdapter);
     }
     catch (error) {
         console.error(error.message);
     }
-    countExecute -= 1;
+    count -= 1;
 }), INTERVAL_MILLISECONDS);

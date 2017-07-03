@@ -5,8 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
+- 各タスクの状態監視ジョブを新規作成。
+- タスクの中止あるいはリトライジョブを新規作成。
 
 ### Changed
+- 取引からタスクをエクスポートするように変更。具体的には、bin/watchClosedTransactionとbin/watchExpiredTransactionの調整。
 
 ### Deprecated
 

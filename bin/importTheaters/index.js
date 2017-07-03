@@ -17,7 +17,7 @@ const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
-const debug = createDebug('sskts-api:*');
+const debug = createDebug('sskts-jobs:*');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');

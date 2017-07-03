@@ -9,16 +9,16 @@ import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-api:*');
+const debug = createDebug('sskts-jobs:*');
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let countExecute = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 250;
-const queueAdapter = sskts.adapter.queue(mongoose.connection);
+const taskAdapter = sskts.adapter.task(mongoose.connection);
 const transactionAdapter = sskts.adapter.transaction(mongoose.connection);
 
 setInterval(
@@ -31,7 +31,7 @@ setInterval(
 
         try {
             debug('exporting queues...');
-            await sskts.service.transaction.exportQueues(sskts.factory.transactionStatus.EXPIRED)(queueAdapter, transactionAdapter);
+            await sskts.service.transaction.exportQueues(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
         } catch (error) {
             console.error(error.message);
         }

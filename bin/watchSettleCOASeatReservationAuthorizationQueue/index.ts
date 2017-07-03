@@ -10,7 +10,7 @@ import * as mongoose from 'mongoose';
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let count = 0;
 
