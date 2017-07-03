@@ -10,12 +10,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 - 取引からタスクをエクスポートするように変更。具体的には、bin/watchClosedTransactionとbin/watchExpiredTransactionの調整。
+- MongoDBのslow queriesレポートに対応してindexを追加。
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- タスク実行時のソート条件が間違っていたので修正。
 
 ### Security
 
