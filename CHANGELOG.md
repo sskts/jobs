@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## v3.2.0 - 2017-07-04
+### Added
 - 各タスクの状態監視ジョブを新規作成。
 - タスクの中止あるいはリトライジョブを新規作成。
 
@@ -13,14 +26,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - MongoDBのslow queriesレポートに対応してindexを追加。
 - タスクや取引を監視させるインターバル時間(秒)を調整。1インスタンスあたりの頻度をやや下げる対応。
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - タスク実行時のソート条件が間違っていたので修正。
-
-### Security
 
 ## v3.1.0 - 2017-06-28
 ### Changed
