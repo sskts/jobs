@@ -10,11 +10,11 @@ import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-api:*');
+const debug = createDebug('sskts-jobs:*');
 
 async function main() {
     debug('connecting mongodb...');
-    mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     // todo インポート期間調整
     const IMPORT_TERMS_IN_DAYS = 7;

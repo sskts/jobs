@@ -10,12 +10,12 @@ import * as mongoose from 'mongoose';
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 1000;
 const assetAdapter = sskts.adapter.asset(mongoose.connection);
 const ownerAdapter = sskts.adapter.owner(mongoose.connection);
 const performanceAdapter = sskts.adapter.performance(mongoose.connection);

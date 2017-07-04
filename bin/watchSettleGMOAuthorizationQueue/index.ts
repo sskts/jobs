@@ -12,7 +12,7 @@ import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 const debug = createDebug('sskts-jobs:bin:watchSettleGMOAuthorizationQueue');
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let count = 0;
 

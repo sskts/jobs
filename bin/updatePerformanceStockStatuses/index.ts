@@ -16,13 +16,14 @@ import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 const debug = createDebug('sskts-jobs:updatePerformanceStockStatuses');
 
 async function main() {
-    mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const redisClient = redis.createClient({
-        host: process.env.STOCK_STATUS_REDIS_HOST,
-        port: process.env.STOCK_STATUS_REDIS_PORT,
-        password: process.env.STOCK_STATUS_REDIS_KEY,
-        tls: { servername: process.env.TEST_REDIS_HOST }
+        host: <string>process.env.STOCK_STATUS_REDIS_HOST,
+        // tslint:disable-next-line:no-magic-numbers
+        port: parseInt(<string>process.env.STOCK_STATUS_REDIS_PORT, 10),
+        password: <string>process.env.STOCK_STATUS_REDIS_KEY,
+        tls: { servername: <string>process.env.TEST_REDIS_HOST }
     });
 
     const IMPORT_TERMS_IN_DAYS = 7;

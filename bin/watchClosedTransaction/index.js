@@ -17,13 +17,13 @@ const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
-const debug = createDebug('sskts-api:*');
+const debug = createDebug('sskts-jobs:*');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
-const queueAdapter = sskts.adapter.queue(mongoose.connection);
+const INTERVAL_MILLISECONDS = 500;
+const taskAdapter = sskts.adapter.task(mongoose.connection);
 const transactionAdapter = sskts.adapter.transaction(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -32,7 +32,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     countExecute += 1;
     try {
         debug('exporting queues...');
-        yield sskts.service.transaction.exportQueues(sskts.factory.transactionStatus.CLOSED)(queueAdapter, transactionAdapter);
+        yield sskts.service.transaction.exportQueues(sskts.factory.transactionStatus.CLOSED)(taskAdapter, transactionAdapter);
     }
     catch (error) {
         console.error(error.message);

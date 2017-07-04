@@ -26,7 +26,8 @@ function main() {
         mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const redisClient = redis.createClient({
             host: process.env.STOCK_STATUS_REDIS_HOST,
-            port: process.env.STOCK_STATUS_REDIS_PORT,
+            // tslint:disable-next-line:no-magic-numbers
+            port: parseInt(process.env.STOCK_STATUS_REDIS_PORT, 10),
             password: process.env.STOCK_STATUS_REDIS_KEY,
             tls: { servername: process.env.TEST_REDIS_HOST }
         });

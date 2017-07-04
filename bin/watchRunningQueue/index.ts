@@ -9,13 +9,13 @@ import * as mongoose from 'mongoose';
 import mongooseConnectionOptions from '../../mongooseConnectionOptions';
 
 (<any>mongoose).Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions);
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let countRetry = 0;
 let countAbort = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 250;
+const INTERVAL_MILLISECONDS = 1000;
 const RETRY_INTERVAL_MINUTES = 10;
 const queueAdapter = sskts.adapter.queue(mongoose.connection);
 
