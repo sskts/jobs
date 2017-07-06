@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+update package [@motionpicture/sskts-domain@22.0.0](https://www.npmjs.com/package/@motionpicture/sskts-domain)
 
 ### Deprecated
 
@@ -16,6 +17,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+update package [tslint-microsoft-contrib@5.0.1](https://github.com/Microsoft/tslint-microsoft-contrib)
+update package [snyk@1.36.2](https://www.npmjs.com/package/snyk)
+update package [tslint@5.5.0](https://www.npmjs.com/package/tslint)
+update package [typescript@2.4.1](https://www.npmjs.com/package/typescript)
 
 ## v3.2.0 - 2017-07-04
 ### Added
