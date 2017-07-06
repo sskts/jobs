@@ -1,13 +1,14 @@
 /**
- * 成立取引監視
+ * 期限切れ取引監視
  *
  * @ignore
  */
+
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as mongoose from 'mongoose';
 
-import mongooseConnectionOptions from '../../mongooseConnectionOptions';
+import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
@@ -31,7 +32,7 @@ setInterval(
 
         try {
             debug('exporting queues...');
-            await sskts.service.transaction.exportQueues(sskts.factory.transactionStatus.CLOSED)(taskAdapter, transactionAdapter);
+            await sskts.service.transaction.exportTasks(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
         } catch (error) {
             console.error(error.message);
         }

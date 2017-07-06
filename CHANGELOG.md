@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Deprecated
 
 ### Removed
+- キュー仕様前提の不要なジョブを削除。
 
 ### Fixed
 

@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * 期限切れ取引監視
+ *
+ * @ignore
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8,34 +13,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * ムビチケ資産移動
- * 実際は何もしない
- *
- * @ignore
- */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongoose = require("mongoose");
-const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:bin:watchSettleMvtkAuthorizationQueue');
+const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
+const debug = createDebug('sskts-jobs:*');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-let count = 0;
+let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 1000;
-const queueAdapter = sskts.adapter.queue(mongoose.connection);
+const INTERVAL_MILLISECONDS = 500;
+const taskAdapter = sskts.adapter.task(mongoose.connection);
+const transactionAdapter = sskts.adapter.transaction(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    count += 1;
+    countExecute += 1;
     try {
-        debug('count:', count);
-        yield sskts.service.queue.executeSettleMvtkAuthorization()(queueAdapter);
+        debug('exporting queues...');
+        yield sskts.service.transaction.exportTasks(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
     }
     catch (error) {
         console.error(error.message);
     }
-    count -= 1;
+    countExecute -= 1;
 }), INTERVAL_MILLISECONDS);
