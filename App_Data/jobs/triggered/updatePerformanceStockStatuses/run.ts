@@ -8,17 +8,15 @@
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as moment from 'moment';
-import * as mongoose from 'mongoose';
-import * as redis from 'redis';
 
-import mongooseConnectionOptions from '../../mongooseConnectionOptions';
+import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:updatePerformanceStockStatuses');
 
 async function main() {
-    mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
-    const redisClient = redis.createClient({
+    const redisClient = sskts.redis.createClient({
         host: <string>process.env.STOCK_STATUS_REDIS_HOST,
         // tslint:disable-next-line:no-magic-numbers
         port: parseInt(<string>process.env.STOCK_STATUS_REDIS_PORT, 10),
@@ -27,7 +25,7 @@ async function main() {
     });
 
     const IMPORT_TERMS_IN_DAYS = 7;
-    const theaterAdapter = sskts.adapter.theater(mongoose.connection);
+    const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
     const performanceStockStatusAdapter = sskts.adapter.stockStatus.performance(redisClient);
 
     // 劇場ごとに更新する
@@ -49,7 +47,7 @@ async function main() {
     }));
 
     redisClient.quit();
-    mongoose.disconnect();
+    sskts.mongoose.disconnect();
 }
 
 main().then(() => { // tslint:disable-line:no-floating-promises

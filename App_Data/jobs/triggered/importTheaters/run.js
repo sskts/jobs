@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * 劇場インポート
+ *
+ * @ignore
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8,35 +13,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * 作品インポート
- *
- * @ignore
- */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
-const mongoose = require("mongoose");
-const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
+const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const theaterAdapter = sskts.adapter.theater(mongoose.connection);
-        const filmAdapter = sskts.adapter.film(mongoose.connection);
+        sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
         const theaterIds = yield theaterAdapter.model.distinct('_id').exec();
         const promises = theaterIds.map((theaterId) => __awaiter(this, void 0, void 0, function* () {
             try {
-                debug('importing films...');
-                yield sskts.service.master.importFilms(theaterId)(theaterAdapter, filmAdapter);
-                debug('films imported.');
+                debug('importing theater...');
+                yield sskts.service.master.importTheater(theaterId)(theaterAdapter);
+                debug('theater imported.');
             }
             catch (error) {
                 console.error(error);
             }
         }));
         yield Promise.all(promises);
-        mongoose.disconnect();
+        sskts.mongoose.disconnect();
     });
 }
 main().then(() => {

@@ -15,11 +15,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
-const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
@@ -30,7 +28,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     count += 1;
     try {
         debug('transaction expiring...');
-        yield sskts.service.transaction.makeExpired()(sskts.adapter.transaction(mongoose.connection));
+        yield sskts.service.transaction.makeExpired()(sskts.adapter.transaction(sskts.mongoose.connection));
     }
     catch (error) {
         console.error(error.message);

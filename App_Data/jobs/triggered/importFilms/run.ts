@@ -1,28 +1,29 @@
 /**
- * 劇場インポート
+ * 作品インポート
  *
  * @ignore
  */
+
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
-import * as mongoose from 'mongoose';
 
-import mongooseConnectionOptions from '../../mongooseConnectionOptions';
+import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
 async function main() {
     debug('connecting mongodb...');
-    mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
-    const theaterAdapter = sskts.adapter.theater(mongoose.connection);
+    const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
+    const filmAdapter = sskts.adapter.film(sskts.mongoose.connection);
 
     const theaterIds = <string[]>await theaterAdapter.model.distinct('_id').exec();
     const promises = theaterIds.map(async (theaterId) => {
         try {
-            debug('importing theater...');
-            await sskts.service.master.importTheater(theaterId)(theaterAdapter);
-            debug('theater imported.');
+            debug('importing films...');
+            await sskts.service.master.importFilms(theaterId)(theaterAdapter, filmAdapter);
+            debug('films imported.');
         } catch (error) {
             console.error(error);
         }
@@ -30,7 +31,7 @@ async function main() {
 
     await Promise.all(promises);
 
-    mongoose.disconnect();
+    sskts.mongoose.disconnect();
 }
 
 main().then(() => { // tslint:disable-line:no-floating-promises

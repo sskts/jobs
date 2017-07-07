@@ -5,18 +5,17 @@
  */
 
 import * as sskts from '@motionpicture/sskts-domain';
-import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
-(<any>mongoose).Promise = global.Promise;
-mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+(<any>sskts.mongoose).Promise = global.Promise;
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
-const taskAdapter = sskts.adapter.task(mongoose.connection);
+const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
 
 setInterval(
     async () => {
@@ -29,7 +28,7 @@ setInterval(
         try {
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.CancelGMOAuthorization
-            )(taskAdapter, mongoose.connection);
+            )(taskAdapter, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);
         }

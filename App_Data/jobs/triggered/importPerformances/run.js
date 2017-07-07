@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * 劇場インポート
+ *
+ * @ignore
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8,27 +13,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * 劇場インポート
- *
- * @ignore
- */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
-const mongoose = require("mongoose");
-const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
+const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         // todo インポート期間調整
         const IMPORT_TERMS_IN_DAYS = 7;
-        const theaterAdapter = sskts.adapter.theater(mongoose.connection);
-        const filmAdapter = sskts.adapter.film(mongoose.connection);
-        const screenAdapter = sskts.adapter.screen(mongoose.connection);
-        const performanceAdapter = sskts.adapter.performance(mongoose.connection);
+        const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
+        const filmAdapter = sskts.adapter.film(sskts.mongoose.connection);
+        const screenAdapter = sskts.adapter.screen(sskts.mongoose.connection);
+        const performanceAdapter = sskts.adapter.performance(sskts.mongoose.connection);
         const theaterIds = yield theaterAdapter.model.distinct('_id').exec();
         const promises = theaterIds.map((theaterId) => __awaiter(this, void 0, void 0, function* () {
             try {
@@ -41,7 +40,7 @@ function main() {
             }
         }));
         yield Promise.all(promises);
-        mongoose.disconnect();
+        sskts.mongoose.disconnect();
     });
 }
 main().then(() => {

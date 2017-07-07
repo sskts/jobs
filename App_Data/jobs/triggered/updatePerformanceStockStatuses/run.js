@@ -17,14 +17,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
-const mongoose = require("mongoose");
-const redis = require("redis");
-const mongooseConnectionOptions_1 = require("../../mongooseConnectionOptions");
+const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:updatePerformanceStockStatuses');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const redisClient = redis.createClient({
+        sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        const redisClient = sskts.redis.createClient({
             host: process.env.STOCK_STATUS_REDIS_HOST,
             // tslint:disable-next-line:no-magic-numbers
             port: parseInt(process.env.STOCK_STATUS_REDIS_PORT, 10),
@@ -32,7 +30,7 @@ function main() {
             tls: { servername: process.env.TEST_REDIS_HOST }
         });
         const IMPORT_TERMS_IN_DAYS = 7;
-        const theaterAdapter = sskts.adapter.theater(mongoose.connection);
+        const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
         const performanceStockStatusAdapter = sskts.adapter.stockStatus.performance(redisClient);
         // 劇場ごとに更新する
         const dayStart = moment();
@@ -49,7 +47,7 @@ function main() {
             }
         })));
         redisClient.quit();
-        mongoose.disconnect();
+        sskts.mongoose.disconnect();
     });
 }
 main().then(() => {
