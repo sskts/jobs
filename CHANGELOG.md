@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
+- キュー仕様→タスク仕様の変更において整合性を保つためのジョブを一時的に追加
 
 ### Changed
 - update package [@motionpicture/sskts-domain@22.0.0](https://www.npmjs.com/package/@motionpicture/sskts-domain)
