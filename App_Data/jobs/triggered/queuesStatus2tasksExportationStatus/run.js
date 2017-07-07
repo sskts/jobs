@@ -29,6 +29,8 @@ function main() {
             tasks_exportation_status: sskts.factory.transactionTasksExportationStatus.Unexported
         }, {
             tasks_exportation_status: sskts.factory.transactionTasksExportationStatus.Exported
+        }, {
+            multi: true
         }).exec();
         console.error('result is', result);
         sskts.mongoose.disconnect();

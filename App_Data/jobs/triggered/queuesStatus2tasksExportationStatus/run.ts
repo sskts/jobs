@@ -25,6 +25,9 @@ async function main() {
         },
         {
             tasks_exportation_status: sskts.factory.transactionTasksExportationStatus.Exported
+        },
+        {
+            multi: true
         }
     ).exec();
     console.error('result is', result);
