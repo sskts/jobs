@@ -16,6 +16,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v3.3.0 - 2017-07-10
+### Added
+- キュー仕様→タスク仕様の変更において整合性を保つためのジョブを一時的に追加
+
+### Changed
+- update package [@motionpicture/sskts-domain@22.0.0](https://www.npmjs.com/package/@motionpicture/sskts-domain)
+- jobsからcmdファイルを削除し、全て直接jsファイルを実行するように変更。
+
+### Removed
+- キュー仕様前提の不要なジョブを削除。
+
+### Security
+- update package [tslint-microsoft-contrib@5.0.1](https://github.com/Microsoft/tslint-microsoft-contrib)
+- update package [snyk@1.36.2](https://www.npmjs.com/package/snyk)
+- update package [tslint@5.5.0](https://www.npmjs.com/package/tslint)
+- update package [typescript@2.4.1](https://www.npmjs.com/package/typescript)
+
 ## v3.2.0 - 2017-07-04
 ### Added
 - 各タスクの状態監視ジョブを新規作成。

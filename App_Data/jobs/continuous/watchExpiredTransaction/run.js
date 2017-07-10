@@ -1,6 +1,6 @@
 "use strict";
 /**
- * COA仮予約キャンセル
+ * 期限切れ取引監視
  *
  * @ignore
  */
@@ -14,22 +14,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
+const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
+const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-let count = 0;
+let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
 const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
+const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    count += 1;
+    countExecute += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelSeatReservationAuthorization)(taskAdapter, sskts.mongoose.connection);
+        debug('exporting queues...');
+        yield sskts.service.transaction.exportTasks(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
     }
     catch (error) {
         console.error(error.message);
     }
-    count -= 1;
+    countExecute -= 1;
 }), INTERVAL_MILLISECONDS);

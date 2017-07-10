@@ -1,38 +1,41 @@
 /**
- * タスク中止
+ * 取引キューエクスポートが実行中のままになっている取引を監視する
  *
  * @ignore
  */
 
 import * as sskts from '@motionpicture/sskts-domain';
+import * as createDebug from 'debug';
 
 import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
-(<any>sskts.mongoose).Promise = global.Promise;
+const debug = createDebug('sskts-jobs:*');
+
 sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
-let count = 0;
+let countRetry = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
+const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
 const RETRY_INTERVAL_MINUTES = 10;
-const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
 
 setInterval(
     async () => {
-        if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
+        if (countRetry > MAX_NUBMER_OF_PARALLEL_TASKS) {
             return;
         }
 
-        count += 1;
+        countRetry += 1;
 
         try {
-            await sskts.service.task.abort(RETRY_INTERVAL_MINUTES)(taskAdapter);
+            debug('reexporting queues...');
+            await sskts.service.transaction.reexportTasks(RETRY_INTERVAL_MINUTES)(transactionAdapter);
         } catch (error) {
             console.error(error.message);
         }
 
-        count -= 1;
+        countRetry -= 1;
     },
     INTERVAL_MILLISECONDS
 );

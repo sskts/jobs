@@ -1,6 +1,6 @@
 "use strict";
 /**
- * COA仮予約キャンセル
+ * 取引期限監視
  *
  * @ignore
  */
@@ -14,19 +14,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
+const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
+const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 500;
-const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
+const INTERVAL_MILLISECONDS = 1000;
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelSeatReservationAuthorization)(taskAdapter, sskts.mongoose.connection);
+        debug('transaction expiring...');
+        yield sskts.service.transaction.makeExpired()(sskts.adapter.transaction(sskts.mongoose.connection));
     }
     catch (error) {
         console.error(error.message);
