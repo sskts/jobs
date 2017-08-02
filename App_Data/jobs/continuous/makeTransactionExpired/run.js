@@ -28,7 +28,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     count += 1;
     try {
         debug('transaction expiring...');
-        yield sskts.service.transaction.makeExpired()(sskts.adapter.transaction(sskts.mongoose.connection));
+        yield sskts.service.transaction.placeOrder.makeExpired()(sskts.adapter.transaction(sskts.mongoose.connection));
     }
     catch (error) {
         console.error(error.message);

@@ -29,8 +29,10 @@ setInterval(
         countExecute += 1;
 
         try {
-            debug('exporting queues...');
-            await sskts.service.transaction.exportTasks(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
+            debug('exporting tasks...');
+            await sskts.service.transaction.placeOrder.exportTasks(
+                sskts.factory.transactionStatusType.Expired
+            )(taskAdapter, transactionAdapter);
         } catch (error) {
             console.error(error.message);
         }

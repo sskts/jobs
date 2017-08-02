@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+- schema.orgを取り入れた新しいDBインターフェースでジョブを再構築
 
 ### Deprecated
 

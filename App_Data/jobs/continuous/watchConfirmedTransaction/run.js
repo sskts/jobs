@@ -1,6 +1,6 @@
 "use strict";
 /**
- * 取引キューエクスポートが実行中のままになっている取引を監視する
+ * 成立取引監視
  *
  * @ignore
  */
@@ -18,22 +18,22 @@ const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-let countRetry = 0;
+let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
+const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
 const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
-const RETRY_INTERVAL_MINUTES = 10;
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (countRetry > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    countRetry += 1;
+    countExecute += 1;
     try {
-        debug('reexporting tasks...');
-        yield sskts.service.transaction.placeOrder.reexportTasks(RETRY_INTERVAL_MINUTES)(transactionAdapter);
+        debug('exporting tasks...');
+        yield sskts.service.transaction.placeOrder.exportTasks(sskts.factory.transactionStatusType.Confirmed)(taskAdapter, transactionAdapter);
     }
     catch (error) {
         console.error(error.message);
     }
-    countRetry -= 1;
+    countExecute -= 1;
 }), INTERVAL_MILLISECONDS);

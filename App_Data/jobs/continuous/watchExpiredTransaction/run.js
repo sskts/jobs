@@ -29,8 +29,8 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     countExecute += 1;
     try {
-        debug('exporting queues...');
-        yield sskts.service.transaction.exportTasks(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
+        debug('exporting tasks...');
+        yield sskts.service.transaction.placeOrder.exportTasks(sskts.factory.transactionStatusType.Expired)(taskAdapter, transactionAdapter);
     }
     catch (error) {
         console.error(error.message);

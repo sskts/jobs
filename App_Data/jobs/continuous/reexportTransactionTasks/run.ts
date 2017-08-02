@@ -29,8 +29,8 @@ setInterval(
         countRetry += 1;
 
         try {
-            debug('reexporting queues...');
-            await sskts.service.transaction.reexportTasks(RETRY_INTERVAL_MINUTES)(transactionAdapter);
+            debug('reexporting tasks...');
+            await sskts.service.transaction.placeOrder.reexportTasks(RETRY_INTERVAL_MINUTES)(transactionAdapter);
         } catch (error) {
             console.error(error.message);
         }

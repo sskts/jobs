@@ -16,7 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
-const moment = require("moment");
+// import * as moment from 'moment';
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:updatePerformanceStockStatuses');
 function main() {
@@ -29,23 +29,26 @@ function main() {
             password: process.env.STOCK_STATUS_REDIS_KEY,
             tls: { servername: process.env.TEST_REDIS_HOST }
         });
-        const IMPORT_TERMS_IN_DAYS = 7;
-        const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
-        const performanceStockStatusAdapter = sskts.adapter.stockStatus.performance(redisClient);
-        // 劇場ごとに更新する
-        const dayStart = moment();
-        const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
-        const theaterIds = yield theaterAdapter.model.distinct('_id').exec();
-        yield Promise.all(theaterIds.map((theaterId) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                debug('updating performance stock statuses...');
-                yield sskts.service.stockStatus.updatePerformanceStockStatuses(theaterId, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'))(performanceStockStatusAdapter);
-                debug('performance stock statuses updated');
-            }
-            catch (error) {
-                console.error(error);
-            }
-        })));
+        // const IMPORT_TERMS_IN_DAYS = 7;
+        // const theaterAdapter = sskts.adapter.theater(sskts.mongoose.connection);
+        // const performanceStockStatusAdapter = sskts.adapter.stockStatus.performance(redisClient);
+        // // 劇場ごとに更新する
+        // const dayStart = moment();
+        // const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
+        // const theaterIds = <string[]>await theaterAdapter.model.distinct('_id').exec();
+        // await Promise.all(theaterIds.map(async (theaterId) => {
+        //     try {
+        //         debug('updating performance stock statuses...');
+        //         await sskts.service.stockStatus.updatePerformanceStockStatuses(
+        //             theaterId,
+        //             dayStart.format('YYYYMMDD'),
+        //             dayEnd.format('YYYYMMDD')
+        //         )(performanceStockStatusAdapter);
+        //         debug('performance stock statuses updated');
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // }));
         redisClient.quit();
         sskts.mongoose.disconnect();
     });
