@@ -17,16 +17,16 @@ async function main() {
     sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const redisClient = sskts.redis.createClient({
-        host: <string>process.env.STOCK_STATUS_REDIS_HOST,
+        host: <string>process.env.ITEM_AVAILABILITY_REDIS_HOST,
         // tslint:disable-next-line:no-magic-numbers
-        port: parseInt(<string>process.env.STOCK_STATUS_REDIS_PORT, 10),
-        password: <string>process.env.STOCK_STATUS_REDIS_KEY,
-        tls: { servername: <string>process.env.TEST_REDIS_HOST }
+        port: parseInt(<string>process.env.ITEM_AVAILABILITY_REDIS_PORT, 10),
+        password: <string>process.env.ITEM_AVAILABILITY_REDIS_KEY,
+        tls: { servername: <string>process.env.ITEM_AVAILABILITY_REDIS_HOST }
     });
 
     const IMPORT_TERMS_IN_DAYS = 7;
     const placeAdapter = sskts.adapter.place(sskts.mongoose.connection);
-    const performanceStockStatusAdapter = sskts.adapter.itemAvailability.individualScreeningEvent(redisClient);
+    const itemAvailabilityAdapter = sskts.adapter.itemAvailability.individualScreeningEvent(redisClient);
 
     // update by branchCode
     const dayStart = moment();
@@ -39,7 +39,7 @@ async function main() {
                 branchCode,
                 dayStart.format('YYYYMMDD'),
                 dayEnd.format('YYYYMMDD')
-            )(performanceStockStatusAdapter);
+            )(itemAvailabilityAdapter);
             debug('item availability updated');
         } catch (error) {
             console.error(error);

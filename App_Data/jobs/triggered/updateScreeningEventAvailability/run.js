@@ -23,15 +23,15 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const redisClient = sskts.redis.createClient({
-            host: process.env.STOCK_STATUS_REDIS_HOST,
+            host: process.env.ITEM_AVAILABILITY_REDIS_HOST,
             // tslint:disable-next-line:no-magic-numbers
-            port: parseInt(process.env.STOCK_STATUS_REDIS_PORT, 10),
-            password: process.env.STOCK_STATUS_REDIS_KEY,
-            tls: { servername: process.env.TEST_REDIS_HOST }
+            port: parseInt(process.env.ITEM_AVAILABILITY_REDIS_PORT, 10),
+            password: process.env.ITEM_AVAILABILITY_REDIS_KEY,
+            tls: { servername: process.env.ITEM_AVAILABILITY_REDIS_HOST }
         });
         const IMPORT_TERMS_IN_DAYS = 7;
         const placeAdapter = sskts.adapter.place(sskts.mongoose.connection);
-        const performanceStockStatusAdapter = sskts.adapter.itemAvailability.individualScreeningEvent(redisClient);
+        const itemAvailabilityAdapter = sskts.adapter.itemAvailability.individualScreeningEvent(redisClient);
         // update by branchCode
         const dayStart = moment();
         const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
@@ -39,7 +39,7 @@ function main() {
         yield Promise.all(branchCodes.map((branchCode) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('updating item availability...branchCode:', branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'));
-                yield sskts.service.itemAvailability.updatePerformanceStockStatuses(branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'))(performanceStockStatusAdapter);
+                yield sskts.service.itemAvailability.updatePerformanceStockStatuses(branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'))(itemAvailabilityAdapter);
                 debug('item availability updated');
             }
             catch (error) {
