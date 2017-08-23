@@ -43,7 +43,7 @@
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
     "snyk": "snyk auth && snyk test --ignore-policy",
     "test": "npm run check && mocha",
-    "tslint": "tslint --type-check --project tsconfig.json -c tslint.json bin/**/*.ts test/**/*.ts",
+    "tslint": "tslint --type-check --project tsconfig.json -c tslint.json App_Data/**/*.ts ./*.ts",
     "preversion": "npm run clean && npm run build && npm test",
     "version": "git add -A",
     "postversion": "git push origin --tags"
