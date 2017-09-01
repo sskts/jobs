@@ -25,13 +25,13 @@ async function main() {
     });
 
     const IMPORT_TERMS_IN_DAYS = 7;
-    const placeAdapter = sskts.adapter.place(sskts.mongoose.connection);
-    const itemAvailabilityAdapter = sskts.adapter.itemAvailability.individualScreeningEvent(redisClient);
+    const placeRepository = sskts.repository.place(sskts.mongoose.connection);
+    const itemAvailabilityRepository = sskts.repository.itemAvailability.individualScreeningEvent(redisClient);
 
     // update by branchCode
     const dayStart = moment();
     const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
-    const branchCodes = <string[]>await placeAdapter.placeModel.distinct('branchCode').exec();
+    const branchCodes = <string[]>await placeRepository.placeModel.distinct('branchCode').exec();
     await Promise.all(branchCodes.map(async (branchCode) => {
         try {
             debug('updating item availability...branchCode:', branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'));
@@ -39,7 +39,7 @@ async function main() {
                 branchCode,
                 dayStart.format('YYYYMMDD'),
                 dayEnd.format('YYYYMMDD')
-            )(itemAvailabilityAdapter);
+            )(itemAvailabilityRepository);
             debug('item availability updated');
         } catch (error) {
             console.error(error);

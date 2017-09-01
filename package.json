@@ -39,7 +39,7 @@
   "scripts": {
     "build": "tsc",
     "check": "npm run tslint && nsp check && npm run snyk",
-    "clean": "rimraf App_Data/**/*.js test/**/*.js docs/**/* npm-debug.log*",
+    "clean": "rimraf App_Data/**/*.js test/**/*.js ./doc npm-debug.log*",
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.json",
     "snyk": "snyk auth && snyk test --ignore-policy",
     "test": "npm run check && mocha",

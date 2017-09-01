@@ -21,6 +21,7 @@ sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.def
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
+const transactionRepository = sskts.repository.transaction(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
@@ -28,7 +29,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     count += 1;
     try {
         debug('transaction expiring...');
-        yield sskts.service.transaction.placeOrder.makeExpired()(sskts.adapter.transaction(sskts.mongoose.connection));
+        yield transactionRepository.makeExpired();
     }
     catch (error) {
         console.error(error.message);

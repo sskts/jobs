@@ -14,7 +14,7 @@ let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
+const taskRepository = sskts.repository.task(sskts.mongoose.connection);
 
 setInterval(
     async () => {
@@ -27,7 +27,7 @@ setInterval(
         try {
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.CancelSeatReservation
-            )(taskAdapter, sskts.mongoose.connection);
+            )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);
         }

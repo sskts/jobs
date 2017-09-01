@@ -21,15 +21,15 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const creativeWorkAdapter = sskts.adapter.creativeWork(sskts.mongoose.connection);
-        const organizationAdapter = sskts.adapter.organization(sskts.mongoose.connection);
+        const creativeWorkRepository = sskts.repository.creativeWork(sskts.mongoose.connection);
+        const organizationRepository = sskts.repository.organization(sskts.mongoose.connection);
         // 全劇場組織を取得
-        const movieTheaters = yield sskts.service.organization.searchMovieTheaters({})(organizationAdapter);
+        const movieTheaters = yield organizationRepository.searchMovieTheaters({});
         // 劇場ごとに映画作品をインポート
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing movies...');
-                yield sskts.service.creativeWork.importMovies(movieTheater.location.branchCode)(creativeWorkAdapter);
+                yield sskts.service.masterSync.importMovies(movieTheater.location.branchCode)(creativeWorkRepository);
                 debug('movies imported');
             }
             catch (error) {

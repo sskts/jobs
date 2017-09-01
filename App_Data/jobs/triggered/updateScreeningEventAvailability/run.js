@@ -30,16 +30,16 @@ function main() {
             tls: { servername: process.env.ITEM_AVAILABILITY_REDIS_HOST }
         });
         const IMPORT_TERMS_IN_DAYS = 7;
-        const placeAdapter = sskts.adapter.place(sskts.mongoose.connection);
-        const itemAvailabilityAdapter = sskts.adapter.itemAvailability.individualScreeningEvent(redisClient);
+        const placeRepository = sskts.repository.place(sskts.mongoose.connection);
+        const itemAvailabilityRepository = sskts.repository.itemAvailability.individualScreeningEvent(redisClient);
         // update by branchCode
         const dayStart = moment();
         const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
-        const branchCodes = yield placeAdapter.placeModel.distinct('branchCode').exec();
+        const branchCodes = yield placeRepository.placeModel.distinct('branchCode').exec();
         yield Promise.all(branchCodes.map((branchCode) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('updating item availability...branchCode:', branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'));
-                yield sskts.service.itemAvailability.updatePerformanceStockStatuses(branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'))(itemAvailabilityAdapter);
+                yield sskts.service.itemAvailability.updatePerformanceStockStatuses(branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'))(itemAvailabilityRepository);
                 debug('item availability updated');
             }
             catch (error) {

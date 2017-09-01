@@ -17,6 +17,7 @@ let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
+const transactionRepository = sskts.repository.transaction(sskts.mongoose.connection);
 
 setInterval(
     async () => {
@@ -28,7 +29,7 @@ setInterval(
 
         try {
             debug('transaction expiring...');
-            await sskts.service.transaction.placeOrder.makeExpired()(sskts.adapter.transaction(sskts.mongoose.connection));
+            await transactionRepository.makeExpired();
         } catch (error) {
             console.error(error.message);
         }

@@ -17,8 +17,8 @@ let countExecute = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
-const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
+const taskRepository = sskts.repository.task(sskts.mongoose.connection);
+const transactionRepository = sskts.repository.transaction(sskts.mongoose.connection);
 
 setInterval(
     async () => {
@@ -32,7 +32,7 @@ setInterval(
             debug('exporting tasks...');
             await sskts.service.transaction.placeOrder.exportTasks(
                 sskts.factory.transactionStatusType.Confirmed
-            )(taskAdapter, transactionAdapter);
+            )(taskRepository, transactionRepository);
         } catch (error) {
             console.error(error.message);
         }

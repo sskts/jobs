@@ -21,7 +21,7 @@ sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.def
 let countRetry = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
+const transactionRepository = sskts.repository.transaction(sskts.mongoose.connection);
 const RETRY_INTERVAL_MINUTES = 10;
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (countRetry > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -30,7 +30,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     countRetry += 1;
     try {
         debug('reexporting tasks...');
-        yield sskts.service.transaction.placeOrder.reexportTasks(RETRY_INTERVAL_MINUTES)(transactionAdapter);
+        yield transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
     }
     catch (error) {
         console.error(error.message);
