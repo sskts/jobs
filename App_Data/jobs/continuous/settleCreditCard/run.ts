@@ -30,7 +30,7 @@ setInterval(
         try {
             debug('count:', count);
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SettleGMO
+                sskts.factory.taskName.SettleCreditCard
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

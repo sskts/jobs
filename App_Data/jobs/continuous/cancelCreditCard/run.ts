@@ -27,7 +27,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.CancelGMO
+                sskts.factory.taskName.CancelCreditCard
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

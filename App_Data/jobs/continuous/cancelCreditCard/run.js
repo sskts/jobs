@@ -1,6 +1,6 @@
 "use strict";
 /**
- * GMO実売上
+ * GMO仮売上キャンセル
  *
  * @ignore
  */
@@ -14,9 +14,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
-const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:bin:watchSettleGMOAuthorizationQueue');
+sskts.mongoose.Promise = global.Promise;
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
@@ -28,8 +27,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        debug('count:', count);
-        yield sskts.service.task.executeByName(sskts.factory.taskName.SettleGMO)(taskRepository, sskts.mongoose.connection);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelCreditCard)(taskRepository, sskts.mongoose.connection);
     }
     catch (error) {
         console.error(error.message);
