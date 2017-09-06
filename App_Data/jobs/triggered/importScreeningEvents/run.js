@@ -22,9 +22,9 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const eventRepository = sskts.repository.event(sskts.mongoose.connection);
-        const placeRepository = sskts.repository.place(sskts.mongoose.connection);
-        const organizationRepository = sskts.repository.organization(sskts.mongoose.connection);
+        const eventRepository = new sskts.repository.Event(sskts.mongoose.connection);
+        const placeRepository = new sskts.repository.Place(sskts.mongoose.connection);
+        const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // 全劇場組織を取得
         const movieTheaters = yield organizationRepository.searchMovieTheaters({});
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {

@@ -15,8 +15,8 @@ async function main() {
     debug('connecting mongodb...');
     sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
-    const creativeWorkRepository = sskts.repository.creativeWork(sskts.mongoose.connection);
-    const organizationRepository = sskts.repository.organization(sskts.mongoose.connection);
+    const creativeWorkRepository = new sskts.repository.CreativeWork(sskts.mongoose.connection);
+    const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
 
     // 全劇場組織を取得
     const movieTheaters = await organizationRepository.searchMovieTheaters({});

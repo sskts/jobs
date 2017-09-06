@@ -21,7 +21,7 @@ sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.def
 let countRetry = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const transactionRepository = sskts.repository.transaction(sskts.mongoose.connection);
+const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 const RETRY_INTERVAL_MINUTES = 10;
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (countRetry > MAX_NUBMER_OF_PARALLEL_TASKS) {

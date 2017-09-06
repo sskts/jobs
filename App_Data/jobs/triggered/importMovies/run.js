@@ -21,8 +21,8 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const creativeWorkRepository = sskts.repository.creativeWork(sskts.mongoose.connection);
-        const organizationRepository = sskts.repository.organization(sskts.mongoose.connection);
+        const creativeWorkRepository = new sskts.repository.CreativeWork(sskts.mongoose.connection);
+        const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // 全劇場組織を取得
         const movieTheaters = yield organizationRepository.searchMovieTheaters({});
         // 劇場ごとに映画作品をインポート

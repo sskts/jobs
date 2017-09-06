@@ -30,8 +30,8 @@ function main() {
             tls: { servername: process.env.ITEM_AVAILABILITY_REDIS_HOST }
         });
         const IMPORT_TERMS_IN_DAYS = 7;
-        const placeRepository = sskts.repository.place(sskts.mongoose.connection);
-        const itemAvailabilityRepository = sskts.repository.itemAvailability.individualScreeningEvent(redisClient);
+        const placeRepository = new sskts.repository.Place(sskts.mongoose.connection);
+        const itemAvailabilityRepository = new sskts.repository.itemAvailability.IndividualScreeningEvent(redisClient);
         // update by branchCode
         const dayStart = moment();
         const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');

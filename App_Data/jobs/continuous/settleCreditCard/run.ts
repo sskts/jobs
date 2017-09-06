@@ -17,7 +17,7 @@ let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
-const taskRepository = sskts.repository.task(sskts.mongoose.connection);
+const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 
 setInterval(
     async () => {
