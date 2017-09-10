@@ -8,7 +8,6 @@ import * as sskts from '@motionpicture/sskts-domain';
 
 import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
-(<any>sskts.mongoose).Promise = global.Promise;
 sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
 let count = 0;

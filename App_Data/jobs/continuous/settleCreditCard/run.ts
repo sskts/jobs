@@ -9,7 +9,7 @@ import * as createDebug from 'debug';
 
 import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-jobs:bin:watchSettleGMOAuthorizationQueue');
+const debug = createDebug('sskts-jobs:continuous:settleCreditCard');
 
 sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
