@@ -1,5 +1,5 @@
 /**
- * メール通知
+ * 所有権作成
  *
  * @ignore
  */
@@ -26,7 +26,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SendEmailNotification
+                sskts.factory.taskName.CreateOwnershipInfos
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

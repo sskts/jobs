@@ -1,5 +1,5 @@
 /**
- * メール通知
+ * COA仮予約キャンセル
  *
  * @ignore
  */
@@ -26,7 +26,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SendEmailNotification
+                sskts.factory.taskName.CancelSeatReservation
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

@@ -1,5 +1,5 @@
 /**
- * メール通知
+ * 注文作成
  *
  * @ignore
  */
@@ -26,7 +26,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SendEmailNotification
+                sskts.factory.taskName.CreateOrder
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

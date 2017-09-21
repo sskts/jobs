@@ -20,14 +20,14 @@ let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
 const RETRY_INTERVAL_MINUTES = 10;
-const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
+const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
     count += 1;
     try {
-        yield sskts.service.task.retry(RETRY_INTERVAL_MINUTES)(taskAdapter);
+        yield sskts.service.task.retry(RETRY_INTERVAL_MINUTES)(taskRepository);
     }
     catch (error) {
         console.error(error.message);

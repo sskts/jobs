@@ -1,6 +1,6 @@
 "use strict";
 /**
- * 取引キューエクスポートが実行中のままになっている取引を監視する
+ * GMO仮売上キャンセル
  *
  * @ignore
  */
@@ -14,26 +14,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
-const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-let countRetry = 0;
+let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 500;
-const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
-const RETRY_INTERVAL_MINUTES = 10;
+const INTERVAL_MILLISECONDS = 1000;
+const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (countRetry > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    countRetry += 1;
+    count += 1;
     try {
-        debug('reexporting tasks...');
-        yield transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelCreditCard)(taskRepository, sskts.mongoose.connection);
     }
     catch (error) {
         console.error(error.message);
     }
-    countRetry -= 1;
+    count -= 1;
 }), INTERVAL_MILLISECONDS);

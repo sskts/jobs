@@ -17,7 +17,7 @@ let countRetry = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
+const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 const RETRY_INTERVAL_MINUTES = 10;
 
 setInterval(
@@ -29,8 +29,8 @@ setInterval(
         countRetry += 1;
 
         try {
-            debug('reexporting queues...');
-            await sskts.service.transaction.reexportTasks(RETRY_INTERVAL_MINUTES)(transactionAdapter);
+            debug('reexporting tasks...');
+            await transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
         } catch (error) {
             console.error(error.message);
         }

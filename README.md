@@ -41,9 +41,9 @@ set COA_ENDPOINT=**********coa apiのエンドポイント**********
 set COA_REFRESH_TOKEN=**********coa apiのリフレッシュトークン**********
 set SSKTS_DEVELOPER_EMAIL=**********本apiで使用される開発者メールアドレス**********
 set NUMBER_OF_TRANSACTIONS_PER_MINUTES=**********毎分生成される取引IDの数**********
-set STOCK_STATUS_REDIS_HOST=**********在庫状況保管用Redis Cacheホスト名**********
-set STOCK_STATUS_REDIS_PORT=**********在庫状況保管用Redis Cacheポート番号**********
-set STOCK_STATUS_REDIS_KEY=**********在庫状況保管用Redis Cache接続キー**********
+set ITEM_AVAILABILITY_REDIS_HOST=**********在庫状況保管用Redis Cacheホスト名**********
+set ITEM_AVAILABILITY_REDIS_PORT=**********在庫状況保管用Redis Cacheポート番号**********
+set ITEM_AVAILABILITY_REDIS_KEY=**********在庫状況保管用Redis Cache接続キー**********
 ```
 
 only on Aure WebApps

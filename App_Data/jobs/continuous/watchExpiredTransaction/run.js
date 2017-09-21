@@ -21,16 +21,16 @@ sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.def
 let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const taskAdapter = sskts.adapter.task(sskts.mongoose.connection);
-const transactionAdapter = sskts.adapter.transaction(sskts.mongoose.connection);
+const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
+const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
     countExecute += 1;
     try {
-        debug('exporting queues...');
-        yield sskts.service.transaction.exportTasks(sskts.factory.transactionStatus.EXPIRED)(taskAdapter, transactionAdapter);
+        debug('exporting tasks...');
+        yield sskts.service.transaction.placeOrder.exportTasks(sskts.factory.transactionStatusType.Expired)(taskRepository, transactionRepository);
     }
     catch (error) {
         console.error(error.message);

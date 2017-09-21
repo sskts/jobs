@@ -1,5 +1,5 @@
 /**
- * メール通知
+ * ムビチケ着券オーソリキャンセル
  *
  * @ignore
  */
@@ -13,7 +13,7 @@ sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptio
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 500;
+const INTERVAL_MILLISECONDS = 1000;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 
 setInterval(
@@ -26,7 +26,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SendEmailNotification
+                sskts.factory.taskName.CancelMvtk
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);
