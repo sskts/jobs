@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "git+https://tetsu:M0P!Xmopix@m-p.backlog.jp/git/SSKTS/domain.git#feature/SSKTS-533",
+    "@motionpicture/sskts-domain": "^23.0.0-alpha.4",
     "debug": "^2.6.8",
     "moment": "^2.18.1"
   },
