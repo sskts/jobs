@@ -11,7 +11,7 @@ import mongooseConnectionOptions from '../../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-async function main() {
+export async function main() {
     debug('connecting mongodb...');
     sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
@@ -24,7 +24,7 @@ async function main() {
     // 劇場ごとに映画作品をインポート
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
-            debug('importing movies...');
+            debug('importing movies...', movieTheater);
             await sskts.service.masterSync.importMovies(movieTheater.location.branchCode)(creativeWorkRepository);
             debug('movies imported');
         } catch (error) {

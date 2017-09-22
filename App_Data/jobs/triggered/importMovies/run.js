@@ -28,7 +28,7 @@ function main() {
         // 劇場ごとに映画作品をインポート
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
-                debug('importing movies...');
+                debug('importing movies...', movieTheater);
                 yield sskts.service.masterSync.importMovies(movieTheater.location.branchCode)(creativeWorkRepository);
                 debug('movies imported');
             }
@@ -39,6 +39,7 @@ function main() {
         sskts.mongoose.disconnect();
     });
 }
+exports.main = main;
 main().then(() => {
     debug('success!');
 }).catch((err) => {

@@ -41,6 +41,6 @@
         "App_Data"
     ],
     "exclude": [
-        "node_modules"
+        "App_Data/**/*.spec.ts"
     ]
 }
