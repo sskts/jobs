@@ -4,7 +4,6 @@
         "allowUnusedLabels": false,
         "charset": "utf8",
         "declaration": false,
-        // "declarationDir": "./types",
         "diagnostics": false,
         "disableSizeLimit": false,
         "emitDecoratorMetadata": true,
@@ -26,6 +25,7 @@
         "noResolve": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "outDir": "./dst",
         "preserveConstEnums": false,
         "pretty": false,
         "removeComments": false,
@@ -38,9 +38,9 @@
         "watch": false
     },
     "include": [
-        "App_Data"
+        "src"
     ],
     "exclude": [
-        "App_Data/**/*.spec.ts"
+        "**/*.spec.ts"
     ]
 }

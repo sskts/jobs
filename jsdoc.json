@@ -14,7 +14,7 @@
     "source": {
         "include": [
             "README.md",
-            "App_Data"
+            "dst"
         ],
         "exclude": []
     },

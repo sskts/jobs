@@ -33,6 +33,7 @@ npm run build -- -w
 
 ## Required environment variables
 ```shell
+set NPM_TOKEN=**********npm private packageをインストールするために必要なトークン**********
 set NODE_ENV=**********環境名**********
 set MONGOLAB_URI=**********mongodb接続URI**********
 set SENDGRID_API_KEY=**********sendgrid api key**********
@@ -51,6 +52,7 @@ only on Aure WebApps
 ```shell
 set WEBSITE_NODE_DEFAULT_VERSION=**********node.jsバージョン=**********
 set WEBSITE_TIME_ZONE=Tokyo Standard Time
+set WEBJOBS_ROOT_PATH=**********Location of webjob files**********
 ```
 
 
