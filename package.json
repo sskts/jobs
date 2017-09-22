@@ -10,12 +10,12 @@
   ],
   "dependencies": {
     "@motionpicture/sskts-domain": "^23.0.0-alpha.4",
-    "debug": "^2.6.8",
+    "debug": "^3.0.1",
     "moment": "^2.18.1"
   },
   "description": "This is a repogitory for SSKTS jobs.",
   "devDependencies": {
-    "@types/debug": "0.0.29",
+    "@types/debug": "0.0.30",
     "@types/mocha": "^2.2.43",
     "@types/power-assert": "^1.4.29",
     "@types/sinon": "^2.3.5",
