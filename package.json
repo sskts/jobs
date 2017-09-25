@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^23.0.0-alpha.5",
+    "@motionpicture/sskts-domain": "^23.0.0-alpha.7",
     "debug": "^3.0.1",
     "moment": "^2.18.1"
   },
@@ -47,12 +47,12 @@
     "build": "tsc && cpx src/**/*.job dst -v",
     "build:watch": "concurrently \"tsc -w\" \"cpx src/**/*.job dst -v -w\"",
     "check": "npm run tslint && nsp check",
-    "clean": "rimraf test/**/*.js ./dst ./doc npm-debug.log*",
-    "jsdoc": "jsdoc -c jsdoc.json",
+    "clean": "rimraf ./dst test/**/*.js ./doc ./coverage npm-debug.log* ./.nyc_output",
+    "doc": "jsdoc -c jsdoc.json",
     "mocha": "mocha src/**/*.spec.ts",
     "snyk": "snyk wizard",
     "test": "npm run check && npm run mocha",
-    "tslint": "tslint --type-check --project tsconfig.json -c tslint.json src/**/*.ts ./*.ts --exclude **/*.spec.ts",
+    "tslint": "tslint --type-check --project tsconfig.json -c tslint.json --exclude \"**/*.spec.ts\" src/**/*.ts",
     "preversion": "npm run clean && npm run build && npm test",
     "version": "git add -A",
     "postversion": "git push origin --tags"
