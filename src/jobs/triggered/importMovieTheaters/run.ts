@@ -34,7 +34,7 @@ async function main() {
     sskts.mongoose.disconnect();
 }
 
-main().then(() => { // tslint:disable-line:no-floating-promises
+main().then(() => {
     debug('success!');
 }).catch((err) => {
     console.error(err);

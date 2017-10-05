@@ -25,13 +25,14 @@ async function main() {
 
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
-            debug('importing films...');
+            debug('importing screening events...');
             await sskts.service.masterSync.importScreeningEvents(
                 movieTheater.location.branchCode,
                 moment().toDate(),
-                moment().add(1, 'week').toDate()
+                // tslint:disable-next-line:no-magic-numbers
+                moment().add(3, 'months').toDate()
             )(eventRepository, placeRepository);
-            debug('films imported.');
+            debug('screening events imported.');
         } catch (error) {
             console.error(error);
         }
@@ -40,7 +41,7 @@ async function main() {
     sskts.mongoose.disconnect();
 }
 
-main().then(() => { // tslint:disable-line:no-floating-promises
+main().then(() => {
     debug('success!');
 }).catch((err) => {
     console.error(err);

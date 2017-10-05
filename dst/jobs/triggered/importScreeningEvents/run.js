@@ -29,9 +29,11 @@ function main() {
         const movieTheaters = yield organizationRepository.searchMovieTheaters({});
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
-                debug('importing films...');
-                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, moment().toDate(), moment().add(1, 'week').toDate())(eventRepository, placeRepository);
-                debug('films imported.');
+                debug('importing screening events...');
+                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, moment().toDate(), 
+                // tslint:disable-next-line:no-magic-numbers
+                moment().add(3, 'months').toDate())(eventRepository, placeRepository);
+                debug('screening events imported.');
             }
             catch (error) {
                 console.error(error);

@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
-- schema.orgを取り入れた新しいDBインターフェースでジョブを再構築
+- schema.orgを取り入れた新しいDBインターフェースでジョブを再構築。
+- 上映イベントのインポート期間を先3カ月分に延長。
 
 ### Deprecated
 
