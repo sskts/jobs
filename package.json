@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^23.0.0-alpha.12",
+    "@motionpicture/sskts-domain": "^23.0.0-alpha.14",
     "debug": "^3.1.0",
     "moment": "^2.18.1"
   },
@@ -28,15 +28,15 @@
     "power-assert": "^1.4.4",
     "rimraf": "^2.6.2",
     "sinon": "^3.3.0",
-    "snyk": "^1.42.3",
+    "snyk": "^1.42.4",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "tslint-microsoft-contrib": "^5.0.1",
     "typescript": "^2.5.3"
   },
   "engines": {
-    "node": ">=6.9.1",
-    "npm": ">=3.10.8"
+    "node": ">=8.0.0",
+    "npm": ">=5.3.0"
   },
   "keywords": [],
   "license": "UNLICENSED",
