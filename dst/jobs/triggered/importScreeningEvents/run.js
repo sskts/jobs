@@ -18,6 +18,14 @@ const createDebug = require("debug");
 const moment = require("moment");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
+/**
+ * 上映イベントを何週間後までインポートするか
+ * @const {number}
+ */
+const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS !== undefined)
+    // tslint:disable-next-line:no-magic-numbers
+    ? parseInt(process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 4)
+    : 1;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
@@ -30,9 +38,7 @@ function main() {
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing screening events...');
-                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, moment().toDate(), 
-                // tslint:disable-next-line:no-magic-numbers
-                moment().add(3, 'months').toDate())(eventRepository, placeRepository);
+                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, moment().toDate(), moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate())(eventRepository, placeRepository);
                 debug('screening events imported.');
             }
             catch (error) {

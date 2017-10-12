@@ -45,6 +45,7 @@ set NUMBER_OF_TRANSACTIONS_PER_MINUTES=**********毎分生成される取引ID�
 set ITEM_AVAILABILITY_REDIS_HOST=**********在庫状況保管用Redis Cacheホスト名**********
 set ITEM_AVAILABILITY_REDIS_PORT=**********在庫状況保管用Redis Cacheポート番号**********
 set ITEM_AVAILABILITY_REDIS_KEY=**********在庫状況保管用Redis Cache接続キー**********
+set LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS=**********上映イベントを何週間後までインポートするか**********
 ```
 
 only on Aure WebApps

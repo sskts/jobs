@@ -1,6 +1,5 @@
 /**
  * 上映イベントインポート
- *
  * @ignore
  */
 
@@ -11,6 +10,15 @@ import * as moment from 'moment';
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
+
+/**
+ * 上映イベントを何週間後までインポートするか
+ * @const {number}
+ */
+const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS !== undefined)
+    // tslint:disable-next-line:no-magic-numbers
+    ? parseInt(<string>process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 4)
+    : 1;
 
 async function main() {
     debug('connecting mongodb...');
@@ -29,8 +37,7 @@ async function main() {
             await sskts.service.masterSync.importScreeningEvents(
                 movieTheater.location.branchCode,
                 moment().toDate(),
-                // tslint:disable-next-line:no-magic-numbers
-                moment().add(3, 'months').toDate()
+                moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate()
             )(eventRepository, placeRepository);
             debug('screening events imported.');
         } catch (error) {
