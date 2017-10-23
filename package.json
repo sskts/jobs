@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^23.0.0-alpha.24",
+    "@motionpicture/sskts-domain": "^23.0.0-alpha.25",
     "debug": "^3.1.0",
     "moment": "^2.19.1"
   },
@@ -25,7 +25,7 @@
     "jsdoc": "^3.5.5",
     "mocha": "^3.5.3",
     "nsp": "^2.8.1",
-    "nyc": "^11.2.1",
+    "nyc": "^11.3.0",
     "power-assert": "^1.4.4",
     "rimraf": "^2.6.2",
     "sinon": "^3.3.0",
