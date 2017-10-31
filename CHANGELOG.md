@@ -16,6 +16,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+
+## v4.0.0 - 2017-10-31
+### Changed
+- schema.orgを取り入れた新しいDBインターフェースでジョブを再構築。
+- 上映イベントのインポート期間を先3カ月分に延長。
+
 ## v3.3.0 - 2017-07-10
 ### Added
 - キュー仕様→タスク仕様の変更において整合性を保つためのジョブを一時的に追加
