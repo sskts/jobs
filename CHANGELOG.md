@@ -17,6 +17,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Security
 
 
+## v4.0.2- 2017-11-01
+### Changed
+- COA本予約時に渡す電話番号から数字以外の文字列を除去。
+
 ## v4.0.1 - 2017-10-31
 ### Changed
 - MongoDBのコレクションのいくつかのインデックスを追加。
