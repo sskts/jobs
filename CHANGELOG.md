@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+- COA本予約時に渡す電話番号から数字以外の文字列を除去。
 
 ### Deprecated
 
