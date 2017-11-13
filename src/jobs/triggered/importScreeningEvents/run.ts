@@ -30,14 +30,15 @@ async function main() {
 
     // 全劇場組織を取得
     const movieTheaters = await organizationRepository.searchMovieTheaters({});
-
+    const importFrom = moment().toDate();
+    const importThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
             debug('importing screening events...');
             await sskts.service.masterSync.importScreeningEvents(
                 movieTheater.location.branchCode,
-                moment().toDate(),
-                moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate()
+                importFrom,
+                importThrough
             )(eventRepository, placeRepository);
             debug('screening events imported.');
         } catch (error) {

@@ -2,7 +2,6 @@
 /**
  * パフォーマンス空席状況を更新する
  * COA空席情報から空席状況を生成してredisに保管する
- *
  * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -18,7 +17,15 @@ const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:updateScreeningEventAvailability');
+const debug = createDebug('sskts-jobs:*');
+/**
+ * 上映イベントを何週間後までインポートするか
+ * @const {number}
+ */
+const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS !== undefined)
+    // tslint:disable-next-line:no-magic-numbers
+    ? parseInt(process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 4)
+    : 1;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
@@ -29,17 +36,16 @@ function main() {
             password: process.env.ITEM_AVAILABILITY_REDIS_KEY,
             tls: { servername: process.env.ITEM_AVAILABILITY_REDIS_HOST }
         });
-        const IMPORT_TERMS_IN_DAYS = 7;
-        const placeRepository = new sskts.repository.Place(sskts.mongoose.connection);
         const itemAvailabilityRepository = new sskts.repository.itemAvailability.IndividualScreeningEvent(redisClient);
+        const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // update by branchCode
-        const dayStart = moment();
-        const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
-        const branchCodes = yield placeRepository.placeModel.distinct('branchCode').exec();
-        yield Promise.all(branchCodes.map((branchCode) => __awaiter(this, void 0, void 0, function* () {
+        const movieTheaters = yield organizationRepository.searchMovieTheaters({});
+        const startFrom = moment().toDate();
+        const startThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
+        yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
-                debug('updating item availability...branchCode:', branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'));
-                yield sskts.service.itemAvailability.updatePerformanceStockStatuses(branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'))(itemAvailabilityRepository);
+                debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
+                yield sskts.service.itemAvailability.updateIndividualScreeningEvents(movieTheater.location.branchCode, startFrom, startThrough)(itemAvailabilityRepository);
                 debug('item availability updated');
             }
             catch (error) {
