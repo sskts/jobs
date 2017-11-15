@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 - 上映イベントの空席状況と、上映イベント自体のインポート期間を合わせるように調整。
+- MovieTheaterインポート時にidentifierフィールドがセットされるように修正。
 
 ### Deprecated
 
