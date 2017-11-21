@@ -34,10 +34,12 @@ function main() {
         const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // 全劇場組織を取得
         const movieTheaters = yield organizationRepository.searchMovieTheaters({});
+        const importFrom = moment().toDate();
+        const importThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing screening events...');
-                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, moment().toDate(), moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate())(eventRepository, placeRepository);
+                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, importFrom, importThrough)(eventRepository, placeRepository);
                 debug('screening events imported.');
             }
             catch (error) {

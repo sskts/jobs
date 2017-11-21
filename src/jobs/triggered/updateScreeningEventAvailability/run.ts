@@ -1,7 +1,6 @@
 /**
  * パフォーマンス空席状況を更新する
  * COA空席情報から空席状況を生成してredisに保管する
- *
  * @ignore
  */
 
@@ -11,7 +10,16 @@ import * as moment from 'moment';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-jobs:updateScreeningEventAvailability');
+const debug = createDebug('sskts-jobs:*');
+
+/**
+ * 上映イベントを何週間後までインポートするか
+ * @const {number}
+ */
+const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS !== undefined)
+    // tslint:disable-next-line:no-magic-numbers
+    ? parseInt(<string>process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 4)
+    : 1;
 
 async function main() {
     sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
@@ -24,21 +32,20 @@ async function main() {
         tls: { servername: <string>process.env.ITEM_AVAILABILITY_REDIS_HOST }
     });
 
-    const IMPORT_TERMS_IN_DAYS = 7;
-    const placeRepository = new sskts.repository.Place(sskts.mongoose.connection);
     const itemAvailabilityRepository = new sskts.repository.itemAvailability.IndividualScreeningEvent(redisClient);
+    const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
 
     // update by branchCode
-    const dayStart = moment();
-    const dayEnd = moment(dayStart).add(IMPORT_TERMS_IN_DAYS, 'days');
-    const branchCodes = <string[]>await placeRepository.placeModel.distinct('branchCode').exec();
-    await Promise.all(branchCodes.map(async (branchCode) => {
+    const movieTheaters = await organizationRepository.searchMovieTheaters({});
+    const startFrom = moment().toDate();
+    const startThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
+    await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
-            debug('updating item availability...branchCode:', branchCode, dayStart.format('YYYYMMDD'), dayEnd.format('YYYYMMDD'));
-            await sskts.service.itemAvailability.updatePerformanceStockStatuses(
-                branchCode,
-                dayStart.format('YYYYMMDD'),
-                dayEnd.format('YYYYMMDD')
+            debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
+            await sskts.service.itemAvailability.updateIndividualScreeningEvents(
+                movieTheater.location.branchCode,
+                startFrom,
+                startThrough
             )(itemAvailabilityRepository);
             debug('item availability updated');
         } catch (error) {

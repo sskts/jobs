@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import * as assert from 'assert';
+import * as assert from 'power-assert';
 
 import mongooseConnectionOptions from './mongooseConnectionOptions';
 
