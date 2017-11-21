@@ -7,18 +7,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
-- 上映イベントの空席状況と、上映イベント自体のインポート期間を合わせるように調整。
-- MovieTheaterインポート時にidentifierフィールドがセットされるように修正。
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- COAの認証エラーが頻出するバグ対応として[sskts-domain](https://www.npmjs.com/package/@motionpicture/sskts-domain)をアップデート。
 
 ### Security
 
+
+## v4.0.3- 2017-11-21
+### Changed
+- 上映イベントの空席状況と、上映イベント自体のインポート期間を合わせるように調整。
+- MovieTheaterインポート時にidentifierフィールドがセットされるように修正。
+
+### Fixed
+- COAの認証エラーが頻出するバグ対応として[sskts-domain](https://www.npmjs.com/package/@motionpicture/sskts-domain)をアップデート。
 
 ## v4.0.2- 2017-11-01
 ### Changed
