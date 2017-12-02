@@ -9,9 +9,9 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^23.4.0",
+    "@motionpicture/sskts-domain": "^23.4.2",
     "debug": "^3.1.0",
-    "moment": "^2.19.2"
+    "moment": "^2.19.3"
   },
   "description": "This is a repogitory for SSKTS jobs.",
   "devDependencies": {
@@ -29,7 +29,7 @@
     "power-assert": "^1.4.4",
     "rimraf": "^2.6.2",
     "sinon": "^3.3.0",
-    "snyk": "^1.52.0",
+    "snyk": "^1.53.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "tslint-microsoft-contrib": "^5.0.1",
