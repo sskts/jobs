@@ -17,6 +17,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Security
 
 
+## v4.0.4- 2017-12-06
+### Fixed
+- COA本予約時の予約金額パラメーターに注文の割引金額が含まれているバグを修正。
+
 ## v4.0.3- 2017-11-21
 ### Changed
 - 上映イベントの空席状況と、上映イベント自体のインポート期間を合わせるように調整。
