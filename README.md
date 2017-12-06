@@ -64,7 +64,7 @@ npm run build
 `npm run clean`で不要なソース削除。
 
 ## Test
-`npm test`でテスト実行。
+`npm test` executes tests.
 
 ## Docs
 `npm run doc` emits jsdoc to ./doc.
