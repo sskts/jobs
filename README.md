@@ -21,16 +21,13 @@ npm install
 ```
 * [npm](https://www.npmjs.com/)
 
-
 typescriptをjavascriptにコンパイル。
 
 ```shell
 npm run build
 ```
 
-
 ### Environment variables
-
 | Name                                       | Required              | Value               | Purpose                        |
 | ------------------------------------------ | --------------------- | ------------------- | ------------------------------ |
 | `DEBUG`                                    | false                 | sskts-jobs:*        | Debug                          |
@@ -53,28 +50,21 @@ npm run build
 | `WEBSITE_TIME_ZONE`                        | only on Azure WebApps | Tokyo Standard Time |
 | `WEBJOBS_ROOT_PATH`                        | only on Azure WebApps | dst/jobs            |
 
-
 ## tslint
-
 コード品質チェックをtslintで行う。
 * [tslint](https://github.com/palantir/tslint)
 * [tslint-microsoft-contrib](https://github.com/Microsoft/tslint-microsoft-contrib)
 
 `npm run check`でチェック実行。
 
-
 ## Security
-
 * [nsp](https://www.npmjs.com/package/nsp)
-
 
 ## clean
 `npm run clean`で不要なソース削除。
 
-
 ## Test
 `npm test`でテスト実行。
 
-
 ## Docs
-`npm run doc`でjsdocが作成されます。
+`npm run doc` emits jsdoc to ./doc.
