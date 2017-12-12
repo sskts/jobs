@@ -16,7 +16,7 @@ sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptio
 let countExecute = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 500;
+const INTERVAL_MILLISECONDS = 200;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 
