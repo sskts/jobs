@@ -21,7 +21,7 @@ const debug = createDebug('sskts-jobs:continuous:settleMvtk');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 1000;
+const INTERVAL_MILLISECONDS = 200;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
