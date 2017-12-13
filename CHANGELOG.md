@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
+- クレジットカードオーソリ取消ジョブがマルチインスタンスで動作しないように設定。
 
 ### Deprecated
 
