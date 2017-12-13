@@ -7,7 +7,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 ### Changed
-- クレジットカードオーソリ取消ジョブがマルチインスタンスで動作しないように設定。
 
 ### Deprecated
 
@@ -17,6 +16,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+
+## v4.0.5- 2017-12-13
+### Changed
+- 確定取引に対する継続ジョブのインターバルを短縮。
+- クレジットカードオーソリ取消ジョブがマルチインスタンスで動作しないように設定。
 
 ## v4.0.4- 2017-12-06
 ### Fixed
