@@ -47,8 +47,11 @@ npm run build
 | `ITEM_AVAILABILITY_REDIS_KEY`              | true                  |                     | 在庫状況保管用Redis Cache key  |
 | `LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS`  | true                  |                     | 上映イベントを何週間後までインポートするか    |
 | `WEBSITE_NODE_DEFAULT_VERSION`             | only on Azure WebApps |                     | Node.js version                |
-| `WEBSITE_TIME_ZONE`                        | only on Azure WebApps | Tokyo Standard Time |
-| `WEBJOBS_ROOT_PATH`                        | only on Azure WebApps | dst/jobs            |
+| `WEBSITE_TIME_ZONE`                        | only on Azure WebApps | Tokyo Standard Time |                                |
+| `WEBJOBS_ROOT_PATH`                        | only on Azure WebApps | dst/jobs            |                                |
+| `PECORINO_AUTHORIZE_SERVER_DOMAIN`         | true                  |                     | Pecorino認可サーバードメイン           |
+| `PECORINO_CLIENT_ID`                       | true                  |                     | PecorinoAPIクライアントID            |
+| `PECORINO_CLIENT_SECRET`                   | true                  |                     | PecorinoAPIクライアントシークレット        |
 
 ## tslint
 コード品質チェックをtslintで行う。
