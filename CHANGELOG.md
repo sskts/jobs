@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - 注文返品処理ジョブを追加。
 
 ### Changed
+- 注文に対するタスク実行時にアクションを保管するように変更。
 
 ### Deprecated
 
