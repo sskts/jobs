@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Removed
 
 ### Fixed
+- COAからの上映イベント同期時に、COAにないイベントをキャンセルステータスへ変更する処理を追加。
 
 ### Security
 
