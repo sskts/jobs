@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 - 注文に対するタスク実行時にアクションを保管するように変更。
+- アクションと取引に対して潜在アクション属性を定義。
 
 ### Deprecated
 
