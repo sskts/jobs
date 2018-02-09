@@ -24,7 +24,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.ReturnCreditCardSales
+                sskts.factory.taskName.RefundCreditCard
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);
