@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - 注文返品取引監視ジョブを追加。
 - クレジットカード売上取消ジョブを追加。
 - 注文返品処理ジョブを追加。
+- 注文配送タスク監視ジョブを追加。
 
 ### Changed
 - 注文に対するタスク実行時にアクションを保管するように変更。
