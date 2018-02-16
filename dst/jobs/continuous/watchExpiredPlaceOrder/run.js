@@ -1,7 +1,6 @@
 "use strict";
 /**
- * 期限切れ取引監視
- *
+ * 期限切れ注文取引監視
  * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {

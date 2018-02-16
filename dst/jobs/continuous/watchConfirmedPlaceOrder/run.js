@@ -1,6 +1,7 @@
 "use strict";
 /**
- * 確定注文返品取引監視
+ * 確定注文取引監視
+ * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -28,7 +29,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     countExecute += 1;
     try {
         debug('exporting tasks...');
-        yield sskts.service.transaction.returnOrder.exportTasks(sskts.factory.transactionStatusType.Confirmed)(taskRepository, transactionRepository);
+        yield sskts.service.transaction.placeOrder.exportTasks(sskts.factory.transactionStatusType.Confirmed)(taskRepository, transactionRepository);
     }
     catch (error) {
         console.error(error.message);
