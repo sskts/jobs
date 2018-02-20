@@ -13,8 +13,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
+const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+const debug = createDebug('sskts-jobs:*');
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;

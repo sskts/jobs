@@ -28,7 +28,7 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
     : 1;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const redisClient = sskts.redis.createClient({
             host: process.env.ITEM_AVAILABILITY_REDIS_HOST,
             // tslint:disable-next-line:no-magic-numbers
@@ -53,7 +53,7 @@ function main() {
             }
         })));
         redisClient.quit();
-        sskts.mongoose.disconnect();
+        yield sskts.mongoose.disconnect();
     });
 }
 main().then(() => {

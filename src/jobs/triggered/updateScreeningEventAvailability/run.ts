@@ -22,7 +22,7 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
     : 1;
 
 async function main() {
-    sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const redisClient = sskts.redis.createClient({
         host: <string>process.env.ITEM_AVAILABILITY_REDIS_HOST,
@@ -54,7 +54,7 @@ async function main() {
     }));
 
     redisClient.quit();
-    sskts.mongoose.disconnect();
+    await sskts.mongoose.disconnect();
 }
 
 main().then(() => {
