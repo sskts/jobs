@@ -3,10 +3,13 @@
  */
 
 import * as sskts from '@motionpicture/sskts-domain';
+import * as createDebug from 'debug';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+const debug = createDebug('sskts-jobs:*');
+
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
 let count = 0;
 
@@ -24,7 +27,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.ReturnCreditCardSales
+                sskts.factory.taskName.RefundCreditCard
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

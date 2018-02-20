@@ -1,6 +1,5 @@
 /**
- * 成立取引監視
- *
+ * 期限切れ注文取引監視
  * @ignore
  */
 
@@ -11,12 +10,12 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
 let countExecute = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 200;
+const INTERVAL_MILLISECONDS = 500;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 
@@ -31,7 +30,7 @@ setInterval(
         try {
             debug('exporting tasks...');
             await sskts.service.transaction.placeOrder.exportTasks(
-                sskts.factory.transactionStatusType.Confirmed
+                sskts.factory.transactionStatusType.Expired
             )(taskRepository, transactionRepository);
         } catch (error) {
             console.error(error.message);

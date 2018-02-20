@@ -1,7 +1,6 @@
 "use strict";
 /**
- * COA仮予約キャンセル
- *
+ * Eメール送信タスク監視
  * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -20,7 +19,7 @@ const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 500;
+const INTERVAL_MILLISECONDS = 200;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -28,7 +27,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelSeatReservation)(taskRepository, sskts.mongoose.connection);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.sendEmailMessage)(taskRepository, sskts.mongoose.connection);
     }
     catch (error) {
         console.error(error.message);

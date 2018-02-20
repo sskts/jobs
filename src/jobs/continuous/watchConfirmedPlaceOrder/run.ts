@@ -1,5 +1,6 @@
 /**
- * 確定注文返品取引監視
+ * 確定注文取引監視
+ * @ignore
  */
 
 import * as sskts from '@motionpicture/sskts-domain';
@@ -9,7 +10,7 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
 let countExecute = 0;
 
@@ -28,7 +29,7 @@ setInterval(
 
         try {
             debug('exporting tasks...');
-            await sskts.service.transaction.returnOrder.exportTasks(
+            await sskts.service.transaction.placeOrder.exportTasks(
                 sskts.factory.transactionStatusType.Confirmed
             )(taskRepository, transactionRepository);
         } catch (error) {

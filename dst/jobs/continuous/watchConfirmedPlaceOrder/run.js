@@ -1,6 +1,7 @@
 "use strict";
 /**
- * クレジットカード売上取消
+ * 確定注文取引監視
+ * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,22 +13,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
+const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-let count = 0;
+const debug = createDebug('sskts-jobs:*');
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 1000;
+const INTERVAL_MILLISECONDS = 200;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
+const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    count += 1;
+    countExecute += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.ReturnCreditCardSales)(taskRepository, sskts.mongoose.connection);
+        debug('exporting tasks...');
+        yield sskts.service.transaction.placeOrder.exportTasks(sskts.factory.transactionStatusType.Confirmed)(taskRepository, transactionRepository);
     }
     catch (error) {
         console.error(error.message);
     }
-    count -= 1;
+    countExecute -= 1;
 }), INTERVAL_MILLISECONDS);

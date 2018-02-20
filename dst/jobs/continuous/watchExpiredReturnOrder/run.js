@@ -1,6 +1,7 @@
 "use strict";
 /**
- * 確定注文返品取引監視
+ * 期限切れ注文返品取引監視
+ * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -15,10 +16,10 @@ const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
 let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 200;
+const INTERVAL_MILLISECONDS = 500;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
 const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
@@ -28,7 +29,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     countExecute += 1;
     try {
         debug('exporting tasks...');
-        yield sskts.service.transaction.returnOrder.exportTasks(sskts.factory.transactionStatusType.Confirmed)(taskRepository, transactionRepository);
+        yield sskts.service.transaction.returnOrder.exportTasks(sskts.factory.transactionStatusType.Expired)(taskRepository, transactionRepository);
     }
     catch (error) {
         console.error(error.message);

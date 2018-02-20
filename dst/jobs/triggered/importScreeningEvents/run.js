@@ -28,7 +28,7 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const eventRepository = new sskts.repository.Event(sskts.mongoose.connection);
         const placeRepository = new sskts.repository.Place(sskts.mongoose.connection);
         const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
@@ -46,7 +46,7 @@ function main() {
                 console.error(error);
             }
         })));
-        sskts.mongoose.disconnect();
+        yield sskts.mongoose.disconnect();
     });
 }
 main().then(() => {

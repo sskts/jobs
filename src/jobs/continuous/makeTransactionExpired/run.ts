@@ -11,7 +11,7 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
 let count = 0;
 

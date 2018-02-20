@@ -20,7 +20,7 @@ const debug = createDebug('sskts-jobs:*');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const placeRepository = new sskts.repository.Place(sskts.mongoose.connection);
         const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // 全劇場組織を取得
@@ -35,7 +35,7 @@ function main() {
                 console.error(error);
             }
         })));
-        sskts.mongoose.disconnect();
+        yield sskts.mongoose.disconnect();
     });
 }
 main().then(() => {

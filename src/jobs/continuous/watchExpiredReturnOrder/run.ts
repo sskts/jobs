@@ -1,6 +1,5 @@
 /**
- * タスク中止
- *
+ * 期限切れ注文返品取引監視
  * @ignore
  */
 
@@ -13,28 +12,31 @@ const debug = createDebug('sskts-jobs:*');
 
 sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
-let count = 0;
+let countExecute = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
-const RETRY_INTERVAL_MINUTES = 10;
 const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
+const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
 
 setInterval(
     async () => {
-        if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
+        if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
             return;
         }
 
-        count += 1;
+        countExecute += 1;
 
         try {
-            await sskts.service.task.abort(RETRY_INTERVAL_MINUTES)(taskRepository);
+            debug('exporting tasks...');
+            await sskts.service.transaction.returnOrder.exportTasks(
+                sskts.factory.transactionStatusType.Expired
+            )(taskRepository, transactionRepository);
         } catch (error) {
             console.error(error.message);
         }
 
-        count -= 1;
+        countExecute -= 1;
     },
     INTERVAL_MILLISECONDS
 );
