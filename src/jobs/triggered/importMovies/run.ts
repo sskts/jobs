@@ -13,7 +13,7 @@ const debug = createDebug('sskts-jobs:*');
 
 export async function main() {
     debug('connecting mongodb...');
-    sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const creativeWorkRepository = new sskts.repository.CreativeWork(sskts.mongoose.connection);
     const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
@@ -32,7 +32,7 @@ export async function main() {
         }
     }));
 
-    sskts.mongoose.disconnect();
+    await sskts.mongoose.disconnect();
 }
 
 main().then(() => {

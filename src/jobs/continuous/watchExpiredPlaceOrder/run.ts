@@ -1,6 +1,5 @@
 /**
- * 期限切れ取引監視
- *
+ * 期限切れ注文取引監視
  * @ignore
  */
 
@@ -11,7 +10,7 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
 let countExecute = 0;
 
