@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## v5.0.0- 2018-02-21
+### Added
 - 注文返品取引監視ジョブを追加。
 - クレジットカード売上取消ジョブを追加。
 - 注文返品処理ジョブを追加。
@@ -18,15 +32,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - 承認アクションのobjectに型を定義し、purposeを取引型に変更。
 - 注文の配送前後のステータス遷移を管理するように変更。
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - COAからの上映イベント同期時に、COAにないイベントをキャンセルステータスへ変更する処理を追加。
-
-### Security
-
 
 ## v4.0.5- 2017-12-13
 ### Changed
