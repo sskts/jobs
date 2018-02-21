@@ -1,6 +1,6 @@
 /**
- * メール通知
- *
+ * ムビチケ使用タスク監視
+ * 実際は何もしない
  * @ignore
  */
 
@@ -9,7 +9,7 @@ import * as createDebug from 'debug';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-jobs:*');
+const debug = createDebug('sskts-jobs:continuous:settleMvtk');
 
 sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
 
@@ -28,8 +28,9 @@ setInterval(
         count += 1;
 
         try {
+            debug('count:', count);
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SendEmailNotification
+                sskts.factory.taskName.UseMvtk
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);

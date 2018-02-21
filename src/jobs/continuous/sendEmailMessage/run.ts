@@ -1,5 +1,5 @@
 /**
- * Eメール送信タスク監視
+ * Eメールメッセージ送信タスク監視
  * @ignore
  */
 
@@ -28,7 +28,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.sendEmailMessage
+                sskts.factory.taskName.SendEmailMessage
             )(taskRepository, sskts.mongoose.connection);
         } catch (error) {
             console.error(error.message);
