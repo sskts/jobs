@@ -49,6 +49,10 @@ npm run build
 | `WEBSITE_NODE_DEFAULT_VERSION`             | only on Azure WebApps |                     | Node.js version                |
 | `WEBSITE_TIME_ZONE`                        | only on Azure WebApps | Tokyo Standard Time |
 | `WEBJOBS_ROOT_PATH`                        | only on Azure WebApps | dst/jobs            |
+| `PECORINO_AUTHORIZE_SERVER_DOMAIN`         | true                  |                     | Pecorino認可サーバードメイン           |
+| `PECORINO_CLIENT_ID`                       | true                  |                     | PecorinoAPIクライアントID            |
+| `PECORINO_CLIENT_SECRET`                   | true                  |                     | PecorinoAPIクライアントシークレット        |
+
 
 ## tslint
 コード品質チェックをtslintで行う。
