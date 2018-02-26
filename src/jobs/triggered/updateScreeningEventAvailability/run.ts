@@ -18,7 +18,7 @@ const debug = createDebug('sskts-jobs:*');
  */
 const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS !== undefined)
     // tslint:disable-next-line:no-magic-numbers
-    ? parseInt(<string>process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 10)
+    ? parseInt(process.env.LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 10)
     : 1;
 
 async function main() {

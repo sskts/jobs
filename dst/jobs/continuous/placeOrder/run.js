@@ -1,7 +1,6 @@
 "use strict";
 /**
- * メール通知
- *
+ * 注文作成
  * @ignore
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -28,7 +27,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.SendEmailNotification)(taskRepository, sskts.mongoose.connection);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.PlaceOrder)(taskRepository, sskts.mongoose.connection);
     }
     catch (error) {
         console.error(error.message);
