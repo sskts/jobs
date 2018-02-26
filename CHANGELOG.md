@@ -5,7 +5,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
 ### Added
-- Pecorino支払実行ジョブを追加。
 
 ### Changed
 
@@ -18,7 +17,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Security
 
 
-## v5.0.0- 2018-02-21
+## v5.0.1 - 2018-02-26
+### Added
+- Pecorino支払実行ジョブを追加。
+
+## v5.0.0 - 2018-02-21
 ### Added
 - 注文返品取引監視ジョブを追加。
 - クレジットカード売上取消ジョブを追加。
@@ -36,16 +39,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 - COAからの上映イベント同期時に、COAにないイベントをキャンセルステータスへ変更する処理を追加。
 
-## v4.0.5- 2017-12-13
+## v4.0.5 - 2017-12-13
 ### Changed
 - 確定取引に対する継続ジョブのインターバルを短縮。
 - クレジットカードオーソリ取消ジョブがマルチインスタンスで動作しないように設定。
 
-## v4.0.4- 2017-12-06
+## v4.0.4 - 2017-12-06
 ### Fixed
 - COA本予約時の予約金額パラメーターに注文の割引金額が含まれているバグを修正。
 
-## v4.0.3- 2017-11-21
+## v4.0.3 - 2017-11-21
 ### Changed
 - 上映イベントの空席状況と、上映イベント自体のインポート期間を合わせるように調整。
 - MovieTheaterインポート時にidentifierフィールドがセットされるように修正。
@@ -53,7 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 - COAの認証エラーが頻出するバグ対応として[sskts-domain](https://www.npmjs.com/package/@motionpicture/sskts-domain)をアップデート。
 
-## v4.0.2- 2017-11-01
+## v4.0.2 - 2017-11-01
 ### Changed
 - COA本予約時に渡す電話番号から数字以外の文字列を除去。
 
