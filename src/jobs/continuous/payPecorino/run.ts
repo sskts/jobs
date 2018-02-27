@@ -37,7 +37,11 @@ setInterval(
         try {
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.PayPecorino
-            )(taskRepository, sskts.mongoose.connection, authClient);
+            )({
+                taskRepo: taskRepository,
+                connection: sskts.mongoose.connection,
+                pecorinoAuthClient: authClient
+            });
         } catch (error) {
             console.error(error.message);
         }

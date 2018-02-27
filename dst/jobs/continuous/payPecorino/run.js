@@ -34,7 +34,11 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.PayPecorino)(taskRepository, sskts.mongoose.connection, authClient);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.PayPecorino)({
+            taskRepo: taskRepository,
+            connection: sskts.mongoose.connection,
+            pecorinoAuthClient: authClient
+        });
     }
     catch (error) {
         console.error(error.message);

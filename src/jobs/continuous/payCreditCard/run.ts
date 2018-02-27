@@ -30,7 +30,10 @@ setInterval(
             debug('count:', count);
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.PayCreditCard
-            )(taskRepository, sskts.mongoose.connection);
+            )({
+                taskRepo: taskRepository,
+                connection: sskts.mongoose.connection
+            });
         } catch (error) {
             console.error(error.message);
         }

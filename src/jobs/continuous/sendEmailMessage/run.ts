@@ -29,7 +29,10 @@ setInterval(
         try {
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.SendEmailMessage
-            )(taskRepository, sskts.mongoose.connection);
+            )({
+                taskRepo: taskRepository,
+                connection: sskts.mongoose.connection
+            });
         } catch (error) {
             console.error(error.message);
         }

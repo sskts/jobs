@@ -31,7 +31,10 @@ setInterval(
             debug('count:', count);
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.UseMvtk
-            )(taskRepository, sskts.mongoose.connection);
+            )({
+                taskRepo: taskRepository,
+                connection: sskts.mongoose.connection
+            });
         } catch (error) {
             console.error(error.message);
         }

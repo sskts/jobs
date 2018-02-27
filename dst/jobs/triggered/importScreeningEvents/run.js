@@ -39,7 +39,10 @@ function main() {
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing screening events...');
-                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, importFrom, importThrough)(eventRepository, placeRepository);
+                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, importFrom, importThrough)({
+                    event: eventRepository,
+                    place: placeRepository
+                });
                 debug('screening events imported.');
             }
             catch (error) {
