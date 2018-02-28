@@ -29,7 +29,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.retry(RETRY_INTERVAL_MINUTES)(taskRepository);
+        yield sskts.service.task.retry(RETRY_INTERVAL_MINUTES)({ task: taskRepository });
     }
     catch (error) {
         console.error(error.message);

@@ -27,7 +27,10 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.PlaceOrder)(taskRepository, sskts.mongoose.connection);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.PlaceOrder)({
+            taskRepo: taskRepository,
+            connection: sskts.mongoose.connection
+        });
     }
     catch (error) {
         console.error(error.message);

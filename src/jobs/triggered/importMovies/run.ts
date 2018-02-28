@@ -25,7 +25,7 @@ export async function main() {
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
             debug('importing movies...', movieTheater);
-            await sskts.service.masterSync.importMovies(movieTheater.location.branchCode)(creativeWorkRepository);
+            await sskts.service.masterSync.importMovies(movieTheater.location.branchCode)({ creativeWork: creativeWorkRepository });
             debug('movies imported');
         } catch (error) {
             console.error(error);

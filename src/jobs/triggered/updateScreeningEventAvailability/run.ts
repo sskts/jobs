@@ -46,7 +46,7 @@ async function main() {
                 movieTheater.location.branchCode,
                 startFrom,
                 startThrough
-            )(itemAvailabilityRepository);
+            )({ itemAvailability: itemAvailabilityRepository });
             debug('item availability updated');
         } catch (error) {
             console.error(error);

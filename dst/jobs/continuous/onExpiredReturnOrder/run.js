@@ -29,7 +29,10 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     countExecute += 1;
     try {
         debug('exporting tasks...');
-        yield sskts.service.transaction.returnOrder.exportTasks(sskts.factory.transactionStatusType.Expired)(taskRepository, transactionRepository);
+        yield sskts.service.transaction.returnOrder.exportTasks(sskts.factory.transactionStatusType.Expired)({
+            task: taskRepository,
+            transaction: transactionRepository
+        });
     }
     catch (error) {
         console.error(error.message);

@@ -39,7 +39,10 @@ async function main() {
                 movieTheater.location.branchCode,
                 importFrom,
                 importThrough
-            )(eventRepository, placeRepository);
+            )({
+                event: eventRepository,
+                place: placeRepository
+            });
             debug('screening events imported.');
         } catch (error) {
             console.error(error);

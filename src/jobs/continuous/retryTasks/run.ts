@@ -29,7 +29,7 @@ setInterval(
         count += 1;
 
         try {
-            await sskts.service.task.retry(RETRY_INTERVAL_MINUTES)(taskRepository);
+            await sskts.service.task.retry(RETRY_INTERVAL_MINUTES)({ task: taskRepository });
         } catch (error) {
             console.error(error.message);
         }

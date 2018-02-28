@@ -28,7 +28,10 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     count += 1;
     try {
         debug('count:', count);
-        yield sskts.service.task.executeByName(sskts.factory.taskName.PayCreditCard)(taskRepository, sskts.mongoose.connection);
+        yield sskts.service.task.executeByName(sskts.factory.taskName.PayCreditCard)({
+            taskRepo: taskRepository,
+            connection: sskts.mongoose.connection
+        });
     }
     catch (error) {
         console.error(error.message);

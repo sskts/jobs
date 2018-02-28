@@ -31,7 +31,10 @@ setInterval(
             debug('exporting tasks...');
             await sskts.service.transaction.placeOrder.exportTasks(
                 sskts.factory.transactionStatusType.Confirmed
-            )(taskRepository, transactionRepository);
+            )({
+                task: taskRepository,
+                transaction: transactionRepository
+            });
         } catch (error) {
             console.error(error.message);
         }

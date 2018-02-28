@@ -29,7 +29,7 @@ function main() {
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing movies...', movieTheater);
-                yield sskts.service.masterSync.importMovies(movieTheater.location.branchCode)(creativeWorkRepository);
+                yield sskts.service.masterSync.importMovies(movieTheater.location.branchCode)({ creativeWork: creativeWorkRepository });
                 debug('movies imported');
             }
             catch (error) {

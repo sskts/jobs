@@ -31,7 +31,10 @@ setInterval(
             debug('exporting tasks...');
             await sskts.service.transaction.returnOrder.exportTasks(
                 sskts.factory.transactionStatusType.Expired
-            )(taskRepository, transactionRepository);
+            )({
+                task: taskRepository,
+                transaction: transactionRepository
+            });
         } catch (error) {
             console.error(error.message);
         }

@@ -45,7 +45,7 @@ function main() {
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
-                yield sskts.service.itemAvailability.updateIndividualScreeningEvents(movieTheater.location.branchCode, startFrom, startThrough)(itemAvailabilityRepository);
+                yield sskts.service.itemAvailability.updateIndividualScreeningEvents(movieTheater.location.branchCode, startFrom, startThrough)({ itemAvailability: itemAvailabilityRepository });
                 debug('item availability updated');
             }
             catch (error) {
