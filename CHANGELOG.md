@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
+- Pecorinoインセンティブ付与ジョブを追加。
+
 ### Changed
 
 - update packages.
