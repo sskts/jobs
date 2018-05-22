@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Pecorinoインセンティブ付与ジョブを追加。
 - 中止取引に対する監視ジョブを追加。
+- Pecorino返金ジョブを追加。
 
 ### Changed
 

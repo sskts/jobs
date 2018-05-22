@@ -17,7 +17,7 @@ let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
-const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
+const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 
 setInterval(
     async () => {
@@ -31,7 +31,7 @@ setInterval(
             await sskts.service.task.executeByName(
                 sskts.factory.taskName.CancelMvtk
             )({
-                taskRepo: taskRepository,
+                taskRepo: taskRepo,
                 connection: sskts.mongoose.connection
             });
         } catch (error) {

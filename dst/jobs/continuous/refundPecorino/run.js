@@ -9,33 +9,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * 中止注文取引監視
- * @ignore
+ * Pecorino返金実行
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
-let countExecute = 0;
+let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
-const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
+const authClient = new sskts.pecorinoapi.auth.ClientCredentials({
+    domain: process.env.PECORINO_AUTHORIZE_SERVER_DOMAIN,
+    clientId: process.env.PECORINO_CLIENT_ID,
+    clientSecret: process.env.PECORINO_CLIENT_SECRET,
+    scopes: [],
+    state: ''
+});
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
-    if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
+    if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
-    countExecute += 1;
+    count += 1;
     try {
-        debug('exporting tasks...');
-        yield sskts.service.transaction.placeOrder.exportTasks(sskts.factory.transactionStatusType.Canceled)({
-            task: taskRepo,
-            transaction: transactionRepository
+        yield sskts.service.task.executeByName(sskts.factory.taskName.RefundPecorino)({
+            taskRepo: taskRepo,
+            connection: sskts.mongoose.connection,
+            pecorinoAuthClient: authClient
         });
     }
     catch (error) {
         console.error(error.message);
     }
-    countExecute -= 1;
+    count -= 1;
 }), INTERVAL_MILLISECONDS);
