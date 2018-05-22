@@ -9,7 +9,6 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/pecorino-domain": "file:../pecorino-domain",
     "@motionpicture/sskts-domain": "^25.0.0-alpha.3",
     "debug": "^3.1.0",
     "moment": "^2.22.1"
