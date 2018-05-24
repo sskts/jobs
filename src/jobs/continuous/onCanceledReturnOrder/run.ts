@@ -35,7 +35,7 @@ setInterval(
                 transaction: transactionRepository
             });
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
         }
 
         countExecute -= 1;

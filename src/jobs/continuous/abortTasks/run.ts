@@ -31,7 +31,7 @@ setInterval(
         try {
             await sskts.service.task.abort(RETRY_INTERVAL_MINUTES)({ task: taskRepo });
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
         }
 
         count -= 1;

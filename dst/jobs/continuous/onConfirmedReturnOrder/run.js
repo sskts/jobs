@@ -35,7 +35,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        console.error(error.message);
+        console.error(error);
     }
     countExecute -= 1;
 }), INTERVAL_MILLISECONDS);

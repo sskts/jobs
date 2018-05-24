@@ -1,5 +1,5 @@
 /**
- * Pecorino取引中止
+ * Pecorinoインセンティブ返却
  */
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
@@ -34,7 +34,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.CancelPecorino
+                sskts.factory.taskName.ReturnPecorinoAward
             )({
                 taskRepo: taskRepo,
                 connection: sskts.mongoose.connection,

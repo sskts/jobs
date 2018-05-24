@@ -31,7 +31,7 @@ setInterval(
             debug('transaction expiring...');
             await transactionRepository.makeExpired();
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
         }
 
         count -= 1;

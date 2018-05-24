@@ -36,7 +36,7 @@ setInterval(
                 connection: sskts.mongoose.connection
             });
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
         }
 
         count -= 1;
