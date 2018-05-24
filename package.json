@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^25.0.0-alpha.13",
+    "@motionpicture/sskts-domain": "^25.0.0-alpha.14",
     "debug": "^3.1.0",
     "moment": "^2.22.1"
   },
@@ -29,9 +29,9 @@
     "nyc": "^11.8.0",
     "power-assert": "^1.5.0",
     "rimraf": "^2.6.2",
-    "sinon": "^5.0.7",
-    "snyk": "^1.80.1",
-    "ts-node": "^6.0.3",
+    "sinon": "^5.0.10",
+    "snyk": "^1.82.0",
+    "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
     "tslint-microsoft-contrib": "^5.0.3",
     "typescript": "^2.8.3"
