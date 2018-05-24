@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * GMO仮売上キャンセル
+ * Pecorino取引中止
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
@@ -18,17 +18,25 @@ const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 1000;
+const INTERVAL_MILLISECONDS = 200;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
+const authClient = new sskts.pecorinoapi.auth.ClientCredentials({
+    domain: process.env.PECORINO_AUTHORIZE_SERVER_DOMAIN,
+    clientId: process.env.PECORINO_CLIENT_ID,
+    clientSecret: process.env.PECORINO_CLIENT_SECRET,
+    scopes: [],
+    state: ''
+});
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelCreditCard)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelPecorino)({
             taskRepo: taskRepo,
-            connection: sskts.mongoose.connection
+            connection: sskts.mongoose.connection,
+            pecorinoAuthClient: authClient
         });
     }
     catch (error) {
