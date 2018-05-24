@@ -35,7 +35,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.GivePecorino
+                sskts.factory.taskName.GivePecorinoAward
             )({
                 taskRepo: taskRepo,
                 connection: sskts.mongoose.connection,

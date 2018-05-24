@@ -34,7 +34,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.GivePecorino)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.GivePecorinoAward)({
             taskRepo: taskRepo,
             connection: sskts.mongoose.connection,
             pecorinoAuthClient: authClient
