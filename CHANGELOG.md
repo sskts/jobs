@@ -8,11 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
-- Pecorino賞金付与ジョブを追加。
+- Pecorinoインセンティブ付与ジョブを追加。
 - 中止取引に対する監視ジョブを追加。
 - Pecorino返金ジョブを追加。
 - Pecorino取引中止タスクを追加。
-- Pecorino賞金返却ジョブを追加。
+- Pecorinoインセンティブ返却ジョブを追加。
+- 会員プログラム登録ジョブを追加。
 
 ### Changed
 
