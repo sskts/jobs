@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - Pecorino取引中止タスクを追加。
 - Pecorinoインセンティブ返却ジョブを追加。
 - 会員プログラム登録ジョブを追加。
+- Pecorinoインセンティブ承認取消ジョブを追加。
 
 ### Changed
 
