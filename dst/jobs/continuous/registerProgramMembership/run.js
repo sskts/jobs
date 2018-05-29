@@ -12,19 +12,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * 会員プログラム登録タスク
  */
 const sskts = require("@motionpicture/sskts-domain");
-const AWS = require("aws-sdk");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+const redisClient = sskts.redis.createClient({
+    host: process.env.REDIS_HOST,
+    // tslint:disable-next-line:no-magic-numbers
+    port: parseInt(process.env.REDIS_PORT, 10),
+    password: process.env.REDIS_KEY,
+    tls: { servername: process.env.REDIS_HOST }
+});
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
-const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider({
+const cognitoIdentityServiceProvider = new sskts.AWS.CognitoIdentityServiceProvider({
     apiVersion: 'latest',
     region: 'ap-northeast-1',
-    credentials: new AWS.Credentials({
+    credentials: new sskts.AWS.Credentials({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     })
@@ -38,6 +44,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         yield sskts.service.task.executeByName(sskts.factory.taskName.RegisterProgramMembership)({
             taskRepo: taskRepo,
             connection: sskts.mongoose.connection,
+            redisClient: redisClient,
             cognitoIdentityServiceProvider: cognitoIdentityServiceProvider
         });
     }
