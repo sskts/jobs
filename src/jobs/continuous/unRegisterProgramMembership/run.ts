@@ -1,6 +1,5 @@
 /**
- * 注文配送
- * @ignore
+ * 会員プログラム登録解除タスク
  */
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
@@ -10,14 +9,6 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 const debug = createDebug('sskts-jobs:*');
 
 sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
-
-const redisClient = sskts.redis.createClient({
-    host: <string>process.env.REDIS_HOST,
-    // tslint:disable-next-line:no-magic-numbers
-    port: parseInt(<string>process.env.REDIS_PORT, 10),
-    password: <string>process.env.REDIS_KEY,
-    tls: { servername: <string>process.env.REDIS_HOST }
-});
 
 let count = 0;
 
@@ -35,11 +26,10 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.SendOrder
+                sskts.factory.taskName.UnRegisterProgramMembership
             )({
                 taskRepo: taskRepo,
-                connection: sskts.mongoose.connection,
-                redisClient: redisClient
+                connection: sskts.mongoose.connection
             });
         } catch (error) {
             console.error(error);

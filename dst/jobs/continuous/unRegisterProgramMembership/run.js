@@ -9,21 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * 注文配送
- * @ignore
+ * 会員プログラム登録解除タスク
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
-const redisClient = sskts.redis.createClient({
-    host: process.env.REDIS_HOST,
-    // tslint:disable-next-line:no-magic-numbers
-    port: parseInt(process.env.REDIS_PORT, 10),
-    password: process.env.REDIS_KEY,
-    tls: { servername: process.env.REDIS_HOST }
-});
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
@@ -34,10 +26,9 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.SendOrder)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.UnRegisterProgramMembership)({
             taskRepo: taskRepo,
-            connection: sskts.mongoose.connection,
-            redisClient: redisClient
+            connection: sskts.mongoose.connection
         });
     }
     catch (error) {
