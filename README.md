@@ -81,7 +81,3 @@ npm run build
 ## Test
 
 `npm test`でテスト実行。
-
-## Docs
-
-`npm run doc` emits jsdoc to ./doc.
