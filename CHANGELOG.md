@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## v5.1.0 - 2018-06-08
+
+### Added
+
 - Pecorinoインセンティブ付与ジョブを追加。
 - 中止取引に対する監視ジョブを追加。
 - Pecorino返金ジョブを追加。
@@ -20,14 +34,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 
 - update packages.
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## v5.0.2 - 2018-02-28
 ### Changed
