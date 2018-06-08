@@ -18,7 +18,7 @@ let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
 const RETRY_INTERVAL_MINUTES = 10;
-const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
+const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 
 setInterval(
     async () => {
@@ -29,9 +29,9 @@ setInterval(
         count += 1;
 
         try {
-            await sskts.service.task.abort(RETRY_INTERVAL_MINUTES)({ task: taskRepository });
+            await sskts.service.task.abort(RETRY_INTERVAL_MINUTES)({ task: taskRepo });
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
         }
 
         count -= 1;

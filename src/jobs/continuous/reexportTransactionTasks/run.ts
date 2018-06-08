@@ -32,7 +32,7 @@ setInterval(
             debug('reexporting tasks...');
             await transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
         }
 
         countRetry -= 1;

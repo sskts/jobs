@@ -33,7 +33,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         yield transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
     }
     catch (error) {
-        console.error(error.message);
+        console.error(error);
     }
     countRetry -= 1;
 }), INTERVAL_MILLISECONDS);

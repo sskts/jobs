@@ -1,9 +1,11 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## Unreleased
+
 ### Added
 
 ### Changed
@@ -16,6 +18,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v5.1.0 - 2018-06-08
+
+### Added
+
+- Pecorinoインセンティブ付与ジョブを追加。
+- 中止取引に対する監視ジョブを追加。
+- Pecorino返金ジョブを追加。
+- Pecorino取引中止タスクを追加。
+- Pecorinoインセンティブ返却ジョブを追加。
+- 会員プログラム登録ジョブを追加。
+- Pecorinoインセンティブ承認取消ジョブを追加。
+- 会員プログラム登録解除ジョブを追加。
+
+### Changed
+
+- update packages.
 
 ## v5.0.2 - 2018-02-28
 ### Changed

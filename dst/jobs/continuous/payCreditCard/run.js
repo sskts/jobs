@@ -1,8 +1,4 @@
 "use strict";
-/**
- * クレジットカード支払
- * @ignore
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -12,15 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * クレジットカード支払
+ * @ignore
+ */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:continuous:settleCreditCard');
+const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
-const taskRepository = new sskts.repository.Task(sskts.mongoose.connection);
+const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
@@ -29,12 +29,12 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     try {
         debug('count:', count);
         yield sskts.service.task.executeByName(sskts.factory.taskName.PayCreditCard)({
-            taskRepo: taskRepository,
+            taskRepo: taskRepo,
             connection: sskts.mongoose.connection
         });
     }
     catch (error) {
-        console.error(error.message);
+        console.error(error);
     }
     count -= 1;
 }), INTERVAL_MILLISECONDS);
