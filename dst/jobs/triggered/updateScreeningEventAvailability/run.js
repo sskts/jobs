@@ -30,11 +30,11 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const redisClient = sskts.redis.createClient({
-            host: process.env.ITEM_AVAILABILITY_REDIS_HOST,
+            host: process.env.REDIS_HOST,
             // tslint:disable-next-line:no-magic-numbers
-            port: parseInt(process.env.ITEM_AVAILABILITY_REDIS_PORT, 10),
+            port: parseInt(process.env.REDIS_PORT, 10),
             password: process.env.ITEM_AVAILABILITY_REDIS_KEY,
-            tls: { servername: process.env.ITEM_AVAILABILITY_REDIS_HOST }
+            tls: { servername: process.env.REDIS_HOST }
         });
         const itemAvailabilityRepository = new sskts.repository.itemAvailability.IndividualScreeningEvent(redisClient);
         const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);

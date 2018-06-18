@@ -50,9 +50,6 @@ npm run build
 | `REDIS_HOST`                               | true                  |                     | Redis Cache host                |
 | `REDIS_PORT`                               | true                  |                     | Redis Cache port                |
 | `REDIS_KEY`                                | true                  |                     | Redis Cache key                 |
-| `ITEM_AVAILABILITY_REDIS_HOST`             | true                  |                     | 在庫状況保管用Redis Cache host         |
-| `ITEM_AVAILABILITY_REDIS_PORT`             | true                  |                     | 在庫状況保管用Redis Cache port         |
-| `ITEM_AVAILABILITY_REDIS_KEY`              | true                  |                     | 在庫状況保管用Redis Cache key          |
 | `LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS`  | true                  |                     | 上映イベントを何週間後までインポートするか           |
 | `WEBSITE_NODE_DEFAULT_VERSION`             | only on Azure WebApps |                     | Node.js version                 |
 | `WEBSITE_TIME_ZONE`                        | only on Azure WebApps | Tokyo Standard Time |                                 |

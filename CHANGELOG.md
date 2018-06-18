@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- 複数のRedisCache接続環境変数を統合。
+
 ### Deprecated
 
 ### Removed
