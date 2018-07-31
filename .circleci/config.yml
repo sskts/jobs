@@ -105,7 +105,6 @@ jobs:
 # Used for orchestrating all jobs.
 workflows:
   version: 2
-
   build-test-doc:
     jobs:
       - build
