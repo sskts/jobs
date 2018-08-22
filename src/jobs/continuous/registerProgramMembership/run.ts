@@ -18,6 +18,20 @@ const redisClient = sskts.redis.createClient({
     tls: { servername: <string>process.env.REDIS_HOST }
 });
 
+const pecorinoAuthClient = new sskts.pecorinoapi.auth.ClientCredentials({
+    domain: <string>process.env.PECORINO_AUTHORIZE_SERVER_DOMAIN,
+    clientId: <string>process.env.PECORINO_API_CLIENT_ID,
+    clientSecret: <string>process.env.PECORINO_API_CLIENT_SECRET,
+    scopes: [],
+    state: ''
+});
+
+// pecorino転送取引サービスクライアントを生成
+const depositService = new sskts.pecorinoapi.service.transaction.Deposit({
+    endpoint: <string>process.env.PECORINO_API_ENDPOINT,
+    auth: pecorinoAuthClient
+});
+
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
@@ -47,7 +61,8 @@ setInterval(
                 taskRepo: taskRepo,
                 connection: sskts.mongoose.connection,
                 redisClient: redisClient,
-                cognitoIdentityServiceProvider: cognitoIdentityServiceProvider
+                cognitoIdentityServiceProvider: cognitoIdentityServiceProvider,
+                depositService: depositService
             });
         } catch (error) {
             console.error(error);
