@@ -56,6 +56,8 @@ npm run build
 | `PECORINO_AUTHORIZE_SERVER_DOMAIN`         | true                  |                     | Pecorino認可サーバードメイン              |
 | `PECORINO_CLIENT_ID`                       | true                  |                     | PecorinoAPIクライアントID             |
 | `PECORINO_CLIENT_SECRET`                   | true                  |                     | PecorinoAPIクライアントシークレット         |
+| `PECORINO_API_CLIENT_ID`                   | true                  |                     | PecorinoAPIクライアントシークレット         |
+| `PECORINO_API_CLIENT_SECRET`               | true                  |                     | PecorinoAPIクライアントシークレット         |
 | `AWS_ACCESS_KEY_ID`                        | true                  |                     | AWSアクセスキー                       |
 | `AWS_SECRET_ACCESS_KEY`                    | true                  |                     | AWSシークレットアクセスキー                 |
 | `COGNITO_USER_POOL_ID`                     | true                  |                     | CognitoユーザープールID             ID |
