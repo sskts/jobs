@@ -21,6 +21,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v6.0.0 - 2018-08-23
+
+### Fixed
+
+- スケジュールXML同期
+- 退会処理
+- 1ポイント追加
+
 ## v5.1.1 - 2018-06-09
 
 ### Fixed
