@@ -15,7 +15,14 @@ let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
-
+const cognitoIdentityServiceProvider = new sskts.AWS.CognitoIdentityServiceProvider({
+    apiVersion: 'latest',
+    region: 'ap-northeast-1',
+    credentials: new sskts.AWS.Credentials({
+        accessKeyId: <string>process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: <string>process.env.AWS_SECRET_ACCESS_KEY
+    })
+});
 setInterval(
     async () => {
         if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -29,7 +36,8 @@ setInterval(
                 sskts.factory.taskName.UnRegisterProgramMembership
             )({
                 taskRepo: taskRepo,
-                connection: sskts.mongoose.connection
+                connection: sskts.mongoose.connection,
+                cognitoIdentityServiceProvider: cognitoIdentityServiceProvider
             });
         } catch (error) {
             console.error(error);

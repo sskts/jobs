@@ -1,6 +1,4 @@
-<img src="https://motionpicture.jp/images/common/logo_01.svg" alt="motionpicture" title="motionpicture" align="right" height="56" width="98"/>
-
-# SSKTS jobs application
+# SSKTS Jobs Application
 
 ## Getting Started
 
@@ -50,9 +48,6 @@ npm run build
 | `REDIS_HOST`                               | true                  |                     | Redis Cache host                |
 | `REDIS_PORT`                               | true                  |                     | Redis Cache port                |
 | `REDIS_KEY`                                | true                  |                     | Redis Cache key                 |
-| `ITEM_AVAILABILITY_REDIS_HOST`             | true                  |                     | 在庫状況保管用Redis Cache host         |
-| `ITEM_AVAILABILITY_REDIS_PORT`             | true                  |                     | 在庫状況保管用Redis Cache port         |
-| `ITEM_AVAILABILITY_REDIS_KEY`              | true                  |                     | 在庫状況保管用Redis Cache key          |
 | `LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS`  | true                  |                     | 上映イベントを何週間後までインポートするか           |
 | `WEBSITE_NODE_DEFAULT_VERSION`             | only on Azure WebApps |                     | Node.js version                 |
 | `WEBSITE_TIME_ZONE`                        | only on Azure WebApps | Tokyo Standard Time |                                 |
@@ -61,6 +56,8 @@ npm run build
 | `PECORINO_AUTHORIZE_SERVER_DOMAIN`         | true                  |                     | Pecorino認可サーバードメイン              |
 | `PECORINO_CLIENT_ID`                       | true                  |                     | PecorinoAPIクライアントID             |
 | `PECORINO_CLIENT_SECRET`                   | true                  |                     | PecorinoAPIクライアントシークレット         |
+| `PECORINO_API_CLIENT_ID`                   | true                  |                     | PecorinoAPIクライアントシークレット         |
+| `PECORINO_API_CLIENT_SECRET`               | true                  |                     | PecorinoAPIクライアントシークレット         |
 | `AWS_ACCESS_KEY_ID`                        | true                  |                     | AWSアクセスキー                       |
 | `AWS_SECRET_ACCESS_KEY`                    | true                  |                     | AWSシークレットアクセスキー                 |
 | `COGNITO_USER_POOL_ID`                     | true                  |                     | CognitoユーザープールID             ID |
