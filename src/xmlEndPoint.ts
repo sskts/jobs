@@ -8,10 +8,12 @@ export enum branchCode {
     airaTest = '118',
     aira = '018',
     kitajima = '012',
+    yamatokoriyama = '016',
     yukarigaoka = '019',
     yukarigaokaTest = '119',
     ikebukuroTest = '101',
-    kitajimaTest = '112'
+    kitajimaTest = '112',
+    yamatokoriyamaTest = '116'
 }
 
 export type XMLEndPoint = { [index in branchCode]: { baseUrl: string; theaterCodeName: string } };
@@ -29,6 +31,10 @@ export const movieTheaterXMLEndPoint: XMLEndPoint = {
         baseUrl: 'http://www1.cinemasunshine.jp',
         theaterCodeName: 'kitajima'
     },
+    '016': {
+        baseUrl: 'http://www1.cinemasunshine.jp',
+        theaterCodeName: 'yamatokoriyama'
+    },
     '018': {
         baseUrl: 'http://www1.cinemasunshine.jp',
         theaterCodeName: 'aira'
@@ -45,6 +51,10 @@ export const movieTheaterXMLEndPoint: XMLEndPoint = {
     112: {
         baseUrl: 'http://cinema.coasystems.net',
         theaterCodeName: 'kitajima'
+    },
+    116: {
+        baseUrl: 'http://cinema.coasystems.net',
+        theaterCodeName: 'yamatokoriyama'
     },
     118: {
         baseUrl: 'http://cinema.coasystems.net',
