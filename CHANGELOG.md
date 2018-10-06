@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
+- ウェブフックトリガージョブを追加。
+
 ### Changed
 
 - 複数のRedisCache接続環境変数を統合。
