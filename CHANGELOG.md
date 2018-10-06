@@ -8,12 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
-- ウェブフックトリガージョブを追加。
-
 ### Changed
-
-- 複数のRedisCache接続環境変数を統合。
-- 口座タイプを追加して、Pecorinoに指定するように変更。
 
 ### Deprecated
 
@@ -22,6 +17,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v6.0.1 - 2018-10-06
+
+### Added
+
+- ウェブフックトリガージョブを追加。
+
+### Changed
+
+- 複数のRedisCache接続環境変数を統合。
+- 口座タイプを追加して、Pecorinoに指定するように変更。
 
 ## v6.0.0 - 2018-08-23
 
