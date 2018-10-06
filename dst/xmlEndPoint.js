@@ -10,10 +10,12 @@ var branchCode;
     branchCode["airaTest"] = "118";
     branchCode["aira"] = "018";
     branchCode["kitajima"] = "012";
+    branchCode["yamatokoriyama"] = "016";
     branchCode["yukarigaoka"] = "019";
     branchCode["yukarigaokaTest"] = "119";
     branchCode["ikebukuroTest"] = "101";
     branchCode["kitajimaTest"] = "112";
+    branchCode["yamatokoriyamaTest"] = "116";
 })(branchCode = exports.branchCode || (exports.branchCode = {}));
 /*
  * スケジュール取得をXMLと同期のため、このXMLのエンドポイント一覧が必要
@@ -27,6 +29,10 @@ exports.movieTheaterXMLEndPoint = {
     '012': {
         baseUrl: 'http://www1.cinemasunshine.jp',
         theaterCodeName: 'kitajima'
+    },
+    '016': {
+        baseUrl: 'http://www1.cinemasunshine.jp',
+        theaterCodeName: 'yamatokoriyama'
     },
     '018': {
         baseUrl: 'http://www1.cinemasunshine.jp',
@@ -44,6 +50,10 @@ exports.movieTheaterXMLEndPoint = {
     112: {
         baseUrl: 'http://cinema.coasystems.net',
         theaterCodeName: 'kitajima'
+    },
+    116: {
+        baseUrl: 'http://cinema.coasystems.net',
+        theaterCodeName: 'yamatokoriyama'
     },
     118: {
         baseUrl: 'http://cinema.coasystems.net',
