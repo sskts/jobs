@@ -19,8 +19,8 @@ const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 
 const authClient = new sskts.pecorinoapi.auth.ClientCredentials({
     domain: <string>process.env.PECORINO_AUTHORIZE_SERVER_DOMAIN,
-    clientId: <string>process.env.PECORINO_CLIENT_ID,
-    clientSecret: <string>process.env.PECORINO_CLIENT_SECRET,
+    clientId: <string>process.env.PECORINO_API_CLIENT_ID,
+    clientSecret: <string>process.env.PECORINO_API_CLIENT_SECRET,
     scopes: [],
     state: ''
 });
