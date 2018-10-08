@@ -23,8 +23,8 @@ const INTERVAL_MILLISECONDS = 1000;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 const authClient = new sskts.pecorinoapi.auth.ClientCredentials({
     domain: process.env.PECORINO_AUTHORIZE_SERVER_DOMAIN,
-    clientId: process.env.PECORINO_CLIENT_ID,
-    clientSecret: process.env.PECORINO_CLIENT_SECRET,
+    clientId: process.env.PECORINO_API_CLIENT_ID,
+    clientSecret: process.env.PECORINO_API_CLIENT_SECRET,
     scopes: [],
     state: ''
 });
