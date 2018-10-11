@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v6.0.3 - 2018-10-11
+
+### Changed
+
+- 先行XML参照処理を追加
+
 ## v6.0.2 - 2018-10-08
 
 ### Changed
