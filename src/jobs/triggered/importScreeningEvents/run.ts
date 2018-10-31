@@ -6,7 +6,6 @@
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as moment from 'moment';
-import { branchCode, movieTheaterXMLEndPoint } from '../../../xmlEndPoint';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
@@ -36,12 +35,11 @@ async function main() {
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
             debug('importing screening events...');
-            const xmlEndpointArgs = movieTheaterXMLEndPoint[<branchCode>(movieTheater.location.branchCode)];
             await sskts.service.masterSync.importScreeningEvents(
                 movieTheater.location.branchCode,
                 importFrom,
                 importThrough,
-                xmlEndpointArgs
+                (<any>movieTheater).xmlEndPoint // 急遽変更を強いられたので型のアップデートが間に合わずanyで逃げる
             )({
                 event: eventRepository,
                 place: placeRepository

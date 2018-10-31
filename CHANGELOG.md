@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- XML情報をMongoDBから読み込むように変更。
+
 ### Deprecated
 
 ### Removed
