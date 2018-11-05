@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
-const xmlEndPoint_1 = require("../../../xmlEndPoint");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
 /**
@@ -40,8 +39,8 @@ function main() {
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('importing screening events...');
-                const xmlEndpointArgs = xmlEndPoint_1.movieTheaterXMLEndPoint[(movieTheater.location.branchCode)];
-                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, importFrom, importThrough, xmlEndpointArgs)({
+                yield sskts.service.masterSync.importScreeningEvents(movieTheater.location.branchCode, importFrom, importThrough, movieTheater.xmlEndPoint // 急遽変更を強いられたので型のアップデートが間に合わずanyで逃げる
+                )({
                     event: eventRepository,
                     place: placeRepository
                 });
