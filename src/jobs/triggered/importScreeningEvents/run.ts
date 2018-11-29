@@ -32,29 +32,70 @@ async function main() {
     const movieTheaters = await organizationRepository.searchMovieTheaters({});
     const importFrom = moment().toDate();
     const importThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
-    await Promise.all(movieTheaters.map(async (movieTheater) => {
+
+    // 全劇場のインポート処理を並列実行させるとデバッグがしづらいので、直列実行にしてみる(並列よりも時間はかかるがひとまず問題なし)
+    for (const movieTheater of movieTheaters) {
+        const branchCode = movieTheater.location.branchCode;
+
         try {
-            debug('importing screening events...');
-            await sskts.service.masterSync.importScreeningEvents(
-                movieTheater.location.branchCode,
-                importFrom,
-                importThrough,
-                (<any>movieTheater).xmlEndPoint // 急遽変更を強いられたので型のアップデートが間に合わずanyで逃げる
-            )({
-                event: eventRepository,
-                place: placeRepository
+            await new Promise(async (resolve, reject) => {
+                // インポート処理で予期せぬ状態になっても、最悪{TIMEOUT}で強制終了するように
+                const TIMEOUT = 120000;
+                const timoutTimer = setInterval(
+                    () => {
+                        reject(new Error(`Abort importing forcibly...${branchCode} after ${TIMEOUT} milliseconds`));
+                    },
+                    TIMEOUT
+                );
+
+                debug('importing screening events...', branchCode);
+                await sskts.service.masterSync.importScreeningEvents(
+                    branchCode,
+                    importFrom,
+                    importThrough,
+                    (<any>movieTheater).xmlEndPoint // 急遽変更を強いられたので型のアップデートが間に合わずanyで逃げる
+                )({
+                    event: eventRepository,
+                    place: placeRepository
+                }).then(() => {
+                    debug('screening events imported.', branchCode);
+                    clearInterval(timoutTimer);
+                    resolve();
+                }).catch((err) => {
+                    clearInterval(timoutTimer);
+                    reject(err);
+                });
             });
-            debug('screening events imported.');
         } catch (error) {
-            console.error(error);
+            console.error(error, branchCode);
         }
-    }));
+    }
+
+    // 並列実行する場合はこちら
+    // await Promise.all(movieTheaters.map(async (movieTheater) => {
+    //     try {
+    //         debug('importing screening events...');
+    //         await sskts.service.masterSync.importScreeningEvents(
+    //             movieTheater.location.branchCode,
+    //             importFrom,
+    //             importThrough,
+    //             (<any>movieTheater).xmlEndPoint // 急遽変更を強いられたので型のアップデートが間に合わずanyで逃げる
+    //         )({
+    //             event: eventRepository,
+    //             place: placeRepository
+    //         });
+    //         debug('screening events imported.');
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }));
 
     await sskts.mongoose.disconnect();
 }
 
 main().then(() => {
     debug('success!');
+    process.exit(0);
 }).catch((err) => {
     console.error(err);
     process.exit(1);
