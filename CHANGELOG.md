@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 - イベントインポート処理のエラーハンドリング調整のために、複数劇場のインポート処理を直列実行に変更
+- スケジュールXMLのschedule属性が未定義の場合にスケジュールの読み込みをスルーするように対応
 
 ### Security
 
