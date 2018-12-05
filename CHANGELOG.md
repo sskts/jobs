@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Fixed
 
+- イベントインポート処理のエラーハンドリング調整のために、複数劇場のインポート処理を直列実行に変更
+
 ### Security
 
 ## v6.1.1 - 2018-11-16
