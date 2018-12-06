@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- イベントのID属性を文字列型に変更
+
 ### Deprecated
 
 ### Removed
