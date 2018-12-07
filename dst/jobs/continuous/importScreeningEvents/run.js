@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Webhookをたたく
+ * 上映イベントインポート
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
@@ -18,7 +18,7 @@ const debug = createDebug('sskts-jobs:*');
 sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 100;
+const INTERVAL_MILLISECONDS = 10000;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
@@ -26,7 +26,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.TriggerWebhook)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.ImportScreeningEvents)({
             taskRepo: taskRepo,
             connection: sskts.mongoose.connection
         });

@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 
 - イベントのID属性を文字列型に変更
+- 上映イベントインポートタスクを継続的ジョブへ変更
 
 ### Deprecated
 

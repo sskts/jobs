@@ -1,5 +1,5 @@
 /**
- * Webhookをたたく
+ * 上映イベントインポート
  */
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
@@ -13,7 +13,7 @@ sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptio
 let count = 0;
 
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
-const INTERVAL_MILLISECONDS = 100;
+const INTERVAL_MILLISECONDS = 10000;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 
 setInterval(
@@ -26,7 +26,7 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.TriggerWebhook
+                sskts.factory.taskName.ImportScreeningEvents
             )({
                 taskRepo: taskRepo,
                 connection: sskts.mongoose.connection
