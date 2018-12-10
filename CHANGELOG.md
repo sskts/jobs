@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v6.1.3 - 2018-12-10
+
+### Changed
+
+- COAからのデータインポートを劇場ごとに直列実行するように変更
+
 ## v6.1.2 - 2018-12-10
 
 ### Changed

@@ -1,9 +1,4 @@
 "use strict";
-/**
- * パフォーマンス空席状況を更新する
- * COA空席情報から空席状況を生成してredisに保管する
- * @ignore
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -13,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * パフォーマンス空席状況を更新する
+ * COA空席情報から空席状況を生成してredisに保管する
+ */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:*');
+const debug = createDebug('sskts-jobs:jobs');
 /**
  * 上映イベントを何週間後までインポートするか
  * @const {number}

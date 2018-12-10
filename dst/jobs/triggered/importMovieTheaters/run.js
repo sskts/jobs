@@ -1,9 +1,4 @@
 "use strict";
-/**
- * 劇場インポート
- *
- * @ignore
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -13,10 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * 劇場インポート
+ */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:*');
+const debug = createDebug('sskts-jobs:jobs');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
@@ -25,19 +23,20 @@ function main() {
         const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
         // 全劇場組織を取得
         const movieTheaters = yield organizationRepo.searchMovieTheaters({});
-        yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
+        for (const movieTheater of movieTheaters) {
+            const branchCode = movieTheater.location.branchCode;
             try {
-                debug('importing movieTheater...');
-                yield sskts.service.masterSync.importMovieTheater(movieTheater.location.branchCode)({
+                debug('importing movieTheater...', branchCode);
+                yield sskts.service.masterSync.importMovieTheater(branchCode)({
                     organization: organizationRepo,
                     place: placeRepo
                 });
-                debug('movieTheater imported');
+                debug('movieTheater imported', branchCode);
             }
             catch (error) {
                 console.error(error);
             }
-        })));
+        }
         yield sskts.mongoose.disconnect();
     });
 }
