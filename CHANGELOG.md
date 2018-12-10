@@ -10,19 +10,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
-- イベントのID属性を文字列型に変更
-- 上映イベントインポートタスクを継続的ジョブへ変更
-
 ### Deprecated
 
 ### Removed
 
 ### Fixed
 
+### Security
+
+## v6.1.2 - 2018-12-10
+
+### Changed
+
+- イベントのID属性を文字列型に変更
+- 上映イベントインポートタスクを継続的ジョブへ変更
+
+### Fixed
+
 - イベントインポート処理のエラーハンドリング調整のために、複数劇場のインポート処理を直列実行に変更
 - スケジュールXMLのschedule属性が未定義の場合にスケジュールの読み込みをスルーするように対応
-
-### Security
 
 ## v6.1.1 - 2018-11-16
 
