@@ -1,15 +1,12 @@
 /**
  * 映画作品インポート
- *
- * @ignore
  */
-
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-jobs:*');
+const debug = createDebug('sskts-jobs:jobs');
 
 export async function main() {
     debug('connecting mongodb...');
@@ -22,15 +19,17 @@ export async function main() {
     const movieTheaters = await organizationRepository.searchMovieTheaters({});
 
     // 劇場ごとに映画作品をインポート
-    await Promise.all(movieTheaters.map(async (movieTheater) => {
+    for (const movieTheater of movieTheaters) {
+        const branchCode = movieTheater.location.branchCode;
+
         try {
-            debug('importing movies...', movieTheater);
-            await sskts.service.masterSync.importMovies(movieTheater.location.branchCode)({ creativeWork: creativeWorkRepository });
-            debug('movies imported');
+            debug('importing movies...', branchCode);
+            await sskts.service.masterSync.importMovies(branchCode)({ creativeWork: creativeWorkRepository });
+            debug('movies imported', branchCode);
         } catch (error) {
             console.error(error);
         }
-    }));
+    }
 
     await sskts.mongoose.disconnect();
 }

@@ -1,16 +1,14 @@
 /**
  * パフォーマンス空席状況を更新する
  * COA空席情報から空席状況を生成してredisに保管する
- * @ignore
  */
-
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as moment from 'moment';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
-const debug = createDebug('sskts-jobs:*');
+const debug = createDebug('sskts-jobs:jobs');
 
 /**
  * 上映イベントを何週間後までインポートするか

@@ -15,7 +15,7 @@ const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
-const debug = createDebug('sskts-jobs:*');
+const debug = createDebug('sskts-jobs:jobs');
 /**
  * 上映イベントを何週間後までインポートするか
  * @const {number}

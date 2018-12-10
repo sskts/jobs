@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- COAからのデータインポートを劇場ごとに直列実行するように変更
+
 ### Deprecated
 
 ### Removed
