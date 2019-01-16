@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Fixed
 
+- 日をまたぐイベントの終了日時インポート処理を修正
+
 ### Security
 
 ## v6.1.3 - 2018-12-10
