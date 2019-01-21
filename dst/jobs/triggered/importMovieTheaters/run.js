@@ -34,15 +34,19 @@ function main() {
                 debug('movieTheater imported', branchCode);
             }
             catch (error) {
+                // tslint:disable-next-line:no-console
                 console.error(error);
             }
         }
         yield sskts.mongoose.disconnect();
     });
 }
-main().then(() => {
+main()
+    .then(() => {
     debug('success!');
-}).catch((err) => {
+})
+    .catch((err) => {
+    // tslint:disable-next-line:no-console
     console.error(err);
     process.exit(1);
 });

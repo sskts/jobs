@@ -1,8 +1,6 @@
 /**
  * mongoose接続オプションテスト
- * @ignore
  */
-
 import * as assert from 'power-assert';
 
 import mongooseConnectionOptions from './mongooseConnectionOptions';

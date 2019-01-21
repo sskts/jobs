@@ -1,8 +1,4 @@
 "use strict";
-/**
- * Pecorino支払取引実行
- * @ignore
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -12,11 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Pecorino支払取引実行
+ */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
@@ -41,6 +43,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         });
     }
     catch (error) {
+        // tslint:disable-next-line:no-console
         console.error(error);
     }
     count -= 1;

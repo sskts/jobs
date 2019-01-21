@@ -1,9 +1,4 @@
 "use strict";
-/**
- * タスク中止
- *
- * @ignore
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -13,11 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * タスク中止
+ */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 500;
@@ -32,6 +33,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         yield sskts.service.task.abort(RETRY_INTERVAL_MINUTES)({ task: taskRepo });
     }
     catch (error) {
+        // tslint:disable-next-line:no-console
         console.error(error);
     }
     count -= 1;

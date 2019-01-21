@@ -35,8 +35,11 @@ async function main() {
 
     // update by branchCode
     const movieTheaters = await organizationRepository.searchMovieTheaters({});
-    const startFrom = moment().toDate();
-    const startThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
+    const startFrom = moment()
+        .toDate();
+    const startThrough = moment()
+        .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
+        .toDate();
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
             debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
@@ -47,6 +50,7 @@ async function main() {
             )({ itemAvailability: itemAvailabilityRepository });
             debug('item availability updated');
         } catch (error) {
+            // tslint:disable-next-line:no-console
             console.error(error);
         }
     }));
@@ -55,9 +59,12 @@ async function main() {
     await sskts.mongoose.disconnect();
 }
 
-main().then(() => {
-    debug('success!');
-}).catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
+main()
+    .then(() => {
+        debug('success!');
+    })
+    .catch((err) => {
+        // tslint:disable-next-line:no-console
+        console.error(err);
+        process.exit(1);
+    });

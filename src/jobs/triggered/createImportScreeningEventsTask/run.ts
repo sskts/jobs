@@ -29,8 +29,11 @@ async function main() {
     // 全劇場組織を取得
     const movieTheaterOrganizations = await organizationRepo.searchMovieTheaters({});
     const movieTheaters = await placeRepo.searchMovieTheaters({});
-    const importFrom = moment().toDate();
-    const importThrough = moment(importFrom).add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
+    const importFrom = moment()
+        .toDate();
+    const importThrough = moment(importFrom)
+        .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
+        .toDate();
     const runsAt = new Date();
 
     await Promise.all(movieTheaters.map(async (movieTheater) => {
@@ -42,6 +45,7 @@ async function main() {
                     status: sskts.factory.taskStatus.Ready,
                     runsAt: runsAt,
                     remainingNumberOfTries: 1,
+                    // tslint:disable-next-line:no-null-keyword
                     lastTriedAt: null,
                     numberOfTried: 0,
                     executionResults: [],
@@ -56,6 +60,7 @@ async function main() {
                 debug('task saved', movieTheater.branchCode);
             }
         } catch (error) {
+            // tslint:disable-next-line:no-console
             console.error(error);
         }
     }));
@@ -72,9 +77,12 @@ async function main() {
     });
 }
 
-main().then(() => {
-    debug('success!');
-}).catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
+main()
+    .then(() => {
+        debug('success!');
+    })
+    .catch((err) => {
+        // tslint:disable-next-line:no-console
+        console.error(err);
+        process.exit(1);
+    });

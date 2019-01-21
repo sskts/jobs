@@ -27,6 +27,7 @@ export async function main() {
             await sskts.service.masterSync.importMovies(branchCode)({ creativeWork: creativeWorkRepository });
             debug('movies imported', branchCode);
         } catch (error) {
+            // tslint:disable-next-line:no-console
             console.error(error);
         }
     }
@@ -34,9 +35,12 @@ export async function main() {
     await sskts.mongoose.disconnect();
 }
 
-main().then(() => {
-    debug('success!');
-}).catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
+main()
+    .then(() => {
+        debug('success!');
+    })
+    .catch((err) => {
+        // tslint:disable-next-line:no-console
+        console.error(err);
+        process.exit(1);
+    });

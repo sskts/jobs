@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- 人物インターフェースを拡張
+- 注文の決済方法にムビチケを追加するように変更
+
 ### Deprecated
 
 ### Removed

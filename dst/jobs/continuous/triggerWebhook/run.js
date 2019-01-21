@@ -15,7 +15,10 @@ const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 100;
@@ -32,6 +35,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         });
     }
     catch (error) {
+        // tslint:disable-next-line:no-console
         console.error(error);
     }
     count -= 1;

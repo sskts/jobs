@@ -10,13 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * 注文配送
- * @ignore
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 const redisClient = sskts.redis.createClient({
     host: process.env.REDIS_HOST,
     // tslint:disable-next-line:no-magic-numbers
@@ -41,6 +43,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
         });
     }
     catch (error) {
+        // tslint:disable-next-line:no-console
         console.error(error);
     }
     count -= 1;

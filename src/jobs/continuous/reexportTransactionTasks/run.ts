@@ -1,9 +1,6 @@
 /**
  * 取引キューエクスポートが実行中のままになっている取引を監視する
- *
- * @ignore
  */
-
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 
@@ -11,7 +8,10 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 
 let countRetry = 0;
 
@@ -32,6 +32,7 @@ setInterval(
             debug('reexporting tasks...');
             await transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
         } catch (error) {
+            // tslint:disable-next-line:no-console
             console.error(error);
         }
 

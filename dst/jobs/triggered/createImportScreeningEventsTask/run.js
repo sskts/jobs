@@ -34,8 +34,11 @@ function main() {
         // 全劇場組織を取得
         const movieTheaterOrganizations = yield organizationRepo.searchMovieTheaters({});
         const movieTheaters = yield placeRepo.searchMovieTheaters({});
-        const importFrom = moment().toDate();
-        const importThrough = moment(importFrom).add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
+        const importFrom = moment()
+            .toDate();
+        const importThrough = moment(importFrom)
+            .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
+            .toDate();
         const runsAt = new Date();
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
@@ -46,6 +49,7 @@ function main() {
                         status: sskts.factory.taskStatus.Ready,
                         runsAt: runsAt,
                         remainingNumberOfTries: 1,
+                        // tslint:disable-next-line:no-null-keyword
                         lastTriedAt: null,
                         numberOfTried: 0,
                         executionResults: [],
@@ -61,6 +65,7 @@ function main() {
                 }
             }
             catch (error) {
+                // tslint:disable-next-line:no-console
                 console.error(error);
             }
         })));
@@ -74,9 +79,12 @@ function main() {
         });
     });
 }
-main().then(() => {
+main()
+    .then(() => {
     debug('success!');
-}).catch((err) => {
+})
+    .catch((err) => {
+    // tslint:disable-next-line:no-console
     console.error(err);
     process.exit(1);
 });

@@ -39,8 +39,11 @@ function main() {
         const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // update by branchCode
         const movieTheaters = yield organizationRepository.searchMovieTheaters({});
-        const startFrom = moment().toDate();
-        const startThrough = moment().add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks').toDate();
+        const startFrom = moment()
+            .toDate();
+        const startThrough = moment()
+            .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
+            .toDate();
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
                 debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
@@ -48,6 +51,7 @@ function main() {
                 debug('item availability updated');
             }
             catch (error) {
+                // tslint:disable-next-line:no-console
                 console.error(error);
             }
         })));
@@ -55,9 +59,12 @@ function main() {
         yield sskts.mongoose.disconnect();
     });
 }
-main().then(() => {
+main()
+    .then(() => {
     debug('success!');
-}).catch((err) => {
+})
+    .catch((err) => {
+    // tslint:disable-next-line:no-console
     console.error(err);
     process.exit(1);
 });
