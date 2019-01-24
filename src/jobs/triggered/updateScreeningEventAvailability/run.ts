@@ -30,7 +30,7 @@ async function main() {
         tls: { servername: <string>process.env.REDIS_HOST }
     });
 
-    const itemAvailabilityRepository = new sskts.repository.itemAvailability.IndividualScreeningEvent(redisClient);
+    const itemAvailabilityRepository = new sskts.repository.itemAvailability.ScreeningEvent(redisClient);
     const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
 
     // update by branchCode

@@ -35,7 +35,7 @@ function main() {
             password: process.env.ITEM_AVAILABILITY_REDIS_KEY,
             tls: { servername: process.env.REDIS_HOST }
         });
-        const itemAvailabilityRepository = new sskts.repository.itemAvailability.IndividualScreeningEvent(redisClient);
+        const itemAvailabilityRepository = new sskts.repository.itemAvailability.ScreeningEvent(redisClient);
         const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
         // update by branchCode
         const movieTheaters = yield organizationRepository.searchMovieTheaters({});
