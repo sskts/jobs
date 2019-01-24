@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - 注文の決済方法にムビチケを追加するように変更
 - 上映イベントタイプを上映イベントシリーズタイプに変更
 - install @motionpicture/sskts-domain@27.0.0
+- 決済方法承認アクションインターフェースを強化
 
 ### Deprecated
 
