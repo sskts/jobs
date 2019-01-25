@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - 上映イベントタイプを上映イベントシリーズタイプに変更
 - install @motionpicture/sskts-domain@27.0.0
 - 決済方法承認アクションインターフェースを強化
+- Pecorinoを利用した口座とのやりとりを実行するタスク名を再命名
 
 ### Deprecated
 

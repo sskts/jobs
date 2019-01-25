@@ -37,10 +37,11 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.CancelPecorino
+                sskts.factory.taskName.CancelAccount
             )({
                 taskRepo: taskRepo,
                 connection: sskts.mongoose.connection,
+                pecorinoEndpoint: <string>process.env.PECORINO_API_ENDPOINT,
                 pecorinoAuthClient: authClient
             });
         } catch (error) {
