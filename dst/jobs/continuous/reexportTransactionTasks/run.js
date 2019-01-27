@@ -31,7 +31,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     countRetry += 1;
     try {
         debug('reexporting tasks...');
-        yield transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
+        yield transactionRepository.reexportTasks({ intervalInMinutes: RETRY_INTERVAL_MINUTES });
     }
     catch (error) {
         // tslint:disable-next-line:no-console

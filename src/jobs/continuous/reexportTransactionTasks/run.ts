@@ -30,7 +30,7 @@ setInterval(
 
         try {
             debug('reexporting tasks...');
-            await transactionRepository.reexportTasks(RETRY_INTERVAL_MINUTES);
+            await transactionRepository.reexportTasks({ intervalInMinutes: RETRY_INTERVAL_MINUTES });
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.error(error);
