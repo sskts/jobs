@@ -9,13 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Pecorino取引中止
+ * Pecorino返金実行
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default).then(debug).catch(console.error);
+sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
@@ -33,13 +36,15 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelPecorino)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.RefundAccount)({
             taskRepo: taskRepo,
             connection: sskts.mongoose.connection,
+            pecorinoEndpoint: process.env.PECORINO_API_ENDPOINT,
             pecorinoAuthClient: authClient
         });
     }
     catch (error) {
+        // tslint:disable-next-line:no-console
         console.error(error);
     }
     count -= 1;

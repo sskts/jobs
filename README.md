@@ -1,15 +1,10 @@
-# SSKTS Jobs Application
+# Cinemasunshine Jobs Application
 
 ## Getting Started
 
-### インフラ
-
-基本的にNode.jsのウェブアプリケーション。
-AzureのWebAppsでWebJobsを動作させる想定。
-
 ### 言語
 
-実態としては、linuxあるいはwindows上でのnode.js。プログラミング言語としては、TypeScript。
+実態としては、linuxあるいはwindows上でのNode.js。プログラミング言語としては、TypeScript。
 
 * [TypeScript](https://www.typescriptlang.org/)
 
@@ -68,10 +63,6 @@ npm run build
 * [tslint-microsoft-contrib](https://github.com/Microsoft/tslint-microsoft-contrib)
 
 `npm run check`でチェック実行。
-
-## Security
-
-* [nsp](https://www.npmjs.com/package/nsp)
 
 ## clean
 

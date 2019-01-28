@@ -32,6 +32,7 @@ function main() {
                 debug('movies imported', branchCode);
             }
             catch (error) {
+                // tslint:disable-next-line:no-console
                 console.error(error);
             }
         }
@@ -39,9 +40,12 @@ function main() {
     });
 }
 exports.main = main;
-main().then(() => {
+main()
+    .then(() => {
     debug('success!');
-}).catch((err) => {
+})
+    .catch((err) => {
+    // tslint:disable-next-line:no-console
     console.error(err);
     process.exit(1);
 });

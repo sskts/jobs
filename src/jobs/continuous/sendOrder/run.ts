@@ -1,6 +1,5 @@
 /**
  * 注文配送
- * @ignore
  */
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
@@ -9,7 +8,10 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 
 const redisClient = sskts.redis.createClient({
     host: <string>process.env.REDIS_HOST,
@@ -42,6 +44,7 @@ setInterval(
                 redisClient: redisClient
             });
         } catch (error) {
+            // tslint:disable-next-line:no-console
             console.error(error);
         }
 

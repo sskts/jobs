@@ -8,7 +8,10 @@ import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions).then(debug).catch(console.error);
+sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions)
+    .then(debug)
+    // tslint:disable-next-line:no-console
+    .catch(console.error);
 
 let count = 0;
 
@@ -34,13 +37,15 @@ setInterval(
 
         try {
             await sskts.service.task.executeByName(
-                sskts.factory.taskName.CancelPecorino
+                sskts.factory.taskName.CancelAccount
             )({
                 taskRepo: taskRepo,
                 connection: sskts.mongoose.connection,
+                pecorinoEndpoint: <string>process.env.PECORINO_API_ENDPOINT,
                 pecorinoAuthClient: authClient
             });
         } catch (error) {
+            // tslint:disable-next-line:no-console
             console.error(error);
         }
 
