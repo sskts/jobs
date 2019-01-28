@@ -10,6 +10,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## v7.0.0 - 2019-01-28
+
+### Changed
+
 - 人物インターフェースを拡張
 - 注文の決済方法にムビチケを追加するように変更
 - 上映イベントタイプを上映イベントシリーズタイプに変更
@@ -18,15 +30,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - Pecorinoを利用した口座とのやりとりを実行するタスク名を再命名
 - ムビチケを決済方法として解釈し、注文における顧客の発生金額が0となるように変更
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
 - 日をまたぐイベントの終了日時インポート処理を修正
-
-### Security
 
 ## v6.1.3 - 2018-12-10
 
