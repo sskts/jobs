@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 
 - 組織のxmlEndPointをadditionalPropertyから読み出すように変更
+- install @motionpicture/sskts-domain@28.0.0
 
 ### Deprecated
 
