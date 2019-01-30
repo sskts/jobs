@@ -40,6 +40,14 @@ async function main() {
         try {
             const movieTheaterOrganization = movieTheaterOrganizations.find((m) => m.location.branchCode === movieTheater.branchCode);
             if (movieTheaterOrganization !== undefined) {
+                let xmlEndPoint: any;
+                if (Array.isArray((<any>movieTheaterOrganization).additionalProperty)) {
+                    const xmlEndPointProperty = (<any>movieTheaterOrganization).additionalProperty.find(((p: any) => {
+                        return p.name === 'xmlEndPoint';
+                    }));
+                    xmlEndPoint = (xmlEndPointProperty !== undefined) ? JSON.parse(xmlEndPointProperty.value) : undefined;
+                }
+
                 const taskAttributes: sskts.factory.task.IAttributes<sskts.factory.taskName.ImportScreeningEvents> = {
                     name: sskts.factory.taskName.ImportScreeningEvents,
                     status: sskts.factory.taskStatus.Ready,
@@ -53,7 +61,7 @@ async function main() {
                         locationBranchCode: movieTheaterOrganization.location.branchCode,
                         importFrom: importFrom,
                         importThrough: importThrough,
-                        xmlEndPoint: movieTheaterOrganization.xmlEndPoint
+                        xmlEndPoint: xmlEndPoint
                     }
                 };
                 await taskRepo.save(taskAttributes);
