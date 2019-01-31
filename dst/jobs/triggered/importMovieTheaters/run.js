@@ -19,23 +19,25 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
         yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const organizationRepo = new sskts.repository.Organization(sskts.mongoose.connection);
+        const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
         const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
         // 全劇場組織を取得
-        const movieTheaters = yield organizationRepo.searchMovieTheaters({});
-        for (const movieTheater of movieTheaters) {
-            const branchCode = movieTheater.location.branchCode;
-            try {
-                debug('importing movieTheater...', branchCode);
-                yield sskts.service.masterSync.importMovieTheater(branchCode)({
-                    organization: organizationRepo,
-                    place: placeRepo
-                });
-                debug('movieTheater imported', branchCode);
-            }
-            catch (error) {
-                // tslint:disable-next-line:no-console
-                console.error(error);
+        const sellers = yield sellerRepo.search({});
+        for (const seller of sellers) {
+            if (seller.location !== undefined && seller.location.branchCode !== undefined) {
+                try {
+                    const branchCode = seller.location.branchCode;
+                    debug('importing movieTheater...', branchCode);
+                    yield sskts.service.masterSync.importMovieTheater(branchCode)({
+                        seller: sellerRepo,
+                        place: placeRepo
+                    });
+                    debug('movieTheater imported', branchCode);
+                }
+                catch (error) {
+                    // tslint:disable-next-line:no-console
+                    console.error(error);
+                }
             }
         }
         yield sskts.mongoose.disconnect();

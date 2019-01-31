@@ -31,24 +31,25 @@ async function main() {
     });
 
     const itemAvailabilityRepository = new sskts.repository.itemAvailability.ScreeningEvent(redisClient);
-    const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
+    const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
 
     // update by branchCode
-    const movieTheaters = await organizationRepository.searchMovieTheaters({});
+    const sellers = await sellerRepo.search({});
     const startFrom = moment()
         .toDate();
     const startThrough = moment()
         .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
         .toDate();
-    await Promise.all(movieTheaters.map(async (movieTheater) => {
+    await Promise.all(sellers.map(async (seller) => {
         try {
-            debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
-            await sskts.service.itemAvailability.updateIndividualScreeningEvents(
-                movieTheater.location.branchCode,
-                startFrom,
-                startThrough
-            )({ itemAvailability: itemAvailabilityRepository });
-            debug('item availability updated');
+            if (seller.location !== undefined && seller.location.branchCode !== undefined) {
+                await sskts.service.itemAvailability.updateIndividualScreeningEvents(
+                    seller.location.branchCode,
+                    startFrom,
+                    startThrough
+                )({ itemAvailability: itemAvailabilityRepository });
+                debug('item availability updated');
+            }
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.error(error);

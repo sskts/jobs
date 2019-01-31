@@ -29,10 +29,10 @@ function main() {
         debug('connecting mongodb...');
         yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
-        const organizationRepo = new sskts.repository.Organization(sskts.mongoose.connection);
+        const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
         const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
         // 全劇場組織を取得
-        const movieTheaterOrganizations = yield organizationRepo.searchMovieTheaters({});
+        const sellers = yield sellerRepo.search({});
         const movieTheaters = yield placeRepo.searchMovieTheaters({});
         const importFrom = moment()
             .toDate();
@@ -42,11 +42,16 @@ function main() {
         const runsAt = new Date();
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const movieTheaterOrganization = movieTheaterOrganizations.find((m) => m.location.branchCode === movieTheater.branchCode);
-                if (movieTheaterOrganization !== undefined) {
+                const branchCode = movieTheater.branchCode;
+                const seller = sellers.find((m) => {
+                    return m.location !== undefined
+                        && m.location.branchCode !== undefined
+                        && m.location.branchCode === branchCode;
+                });
+                if (seller !== undefined) {
                     let xmlEndPoint;
-                    if (Array.isArray(movieTheaterOrganization.additionalProperty)) {
-                        const xmlEndPointProperty = movieTheaterOrganization.additionalProperty.find(((p) => {
+                    if (Array.isArray(seller.additionalProperty)) {
+                        const xmlEndPointProperty = seller.additionalProperty.find(((p) => {
                             return p.name === 'xmlEndPoint';
                         }));
                         xmlEndPoint = (xmlEndPointProperty !== undefined) ? JSON.parse(xmlEndPointProperty.value) : undefined;
@@ -61,7 +66,7 @@ function main() {
                         numberOfTried: 0,
                         executionResults: [],
                         data: {
-                            locationBranchCode: movieTheaterOrganization.location.branchCode,
+                            locationBranchCode: branchCode,
                             importFrom: importFrom,
                             importThrough: importThrough,
                             xmlEndPoint: xmlEndPoint

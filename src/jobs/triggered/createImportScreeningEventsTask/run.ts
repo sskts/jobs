@@ -23,11 +23,11 @@ async function main() {
     await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
-    const organizationRepo = new sskts.repository.Organization(sskts.mongoose.connection);
+    const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
     const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
 
     // 全劇場組織を取得
-    const movieTheaterOrganizations = await organizationRepo.searchMovieTheaters({});
+    const sellers = await sellerRepo.search({});
     const movieTheaters = await placeRepo.searchMovieTheaters({});
     const importFrom = moment()
         .toDate();
@@ -38,11 +38,17 @@ async function main() {
 
     await Promise.all(movieTheaters.map(async (movieTheater) => {
         try {
-            const movieTheaterOrganization = movieTheaterOrganizations.find((m) => m.location.branchCode === movieTheater.branchCode);
-            if (movieTheaterOrganization !== undefined) {
+            const branchCode = movieTheater.branchCode;
+            const seller = sellers.find((m) => {
+                return m.location !== undefined
+                    && m.location.branchCode !== undefined
+                    && m.location.branchCode === branchCode;
+            });
+
+            if (seller !== undefined) {
                 let xmlEndPoint: any;
-                if (Array.isArray((<any>movieTheaterOrganization).additionalProperty)) {
-                    const xmlEndPointProperty = (<any>movieTheaterOrganization).additionalProperty.find(((p: any) => {
+                if (Array.isArray((<any>seller).additionalProperty)) {
+                    const xmlEndPointProperty = (<any>seller).additionalProperty.find(((p: any) => {
                         return p.name === 'xmlEndPoint';
                     }));
                     xmlEndPoint = (xmlEndPointProperty !== undefined) ? JSON.parse(xmlEndPointProperty.value) : undefined;
@@ -58,7 +64,7 @@ async function main() {
                     numberOfTried: 0,
                     executionResults: [],
                     data: {
-                        locationBranchCode: movieTheaterOrganization.location.branchCode,
+                        locationBranchCode: branchCode,
                         importFrom: importFrom,
                         importThrough: importThrough,
                         xmlEndPoint: xmlEndPoint

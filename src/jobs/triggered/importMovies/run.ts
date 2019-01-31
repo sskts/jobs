@@ -13,22 +13,23 @@ export async function main() {
     await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const creativeWorkRepository = new sskts.repository.CreativeWork(sskts.mongoose.connection);
-    const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
+    const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
 
     // 全劇場組織を取得
-    const movieTheaters = await organizationRepository.searchMovieTheaters({});
+    const sellers = await sellerRepo.search({});
 
     // 劇場ごとに映画作品をインポート
-    for (const movieTheater of movieTheaters) {
-        const branchCode = movieTheater.location.branchCode;
-
-        try {
-            debug('importing movies...', branchCode);
-            await sskts.service.masterSync.importMovies(branchCode)({ creativeWork: creativeWorkRepository });
-            debug('movies imported', branchCode);
-        } catch (error) {
-            // tslint:disable-next-line:no-console
-            console.error(error);
+    for (const seller of sellers) {
+        if (seller.location !== undefined && seller.location.branchCode !== undefined) {
+            try {
+                const branchCode = seller.location.branchCode;
+                debug('importing movies...', branchCode);
+                await sskts.service.masterSync.importMovies(branchCode)({ creativeWork: creativeWorkRepository });
+                debug('movies imported', branchCode);
+            } catch (error) {
+                // tslint:disable-next-line:no-console
+                console.error(error);
+            }
         }
     }
 
