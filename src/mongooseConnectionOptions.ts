@@ -5,7 +5,7 @@
 import * as sskts from '@motionpicture/sskts-domain';
 const mongooseConnectionOptions: sskts.mongoose.ConnectionOptions = {
     autoReconnect: true,
-    keepAlive: 120000,
+    keepAlive: true,
     connectTimeoutMS: 30000,
     socketTimeoutMS: 0,
     reconnectTries: 30,
