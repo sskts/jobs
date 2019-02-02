@@ -59,8 +59,6 @@ async function main() {
                     status: sskts.factory.taskStatus.Ready,
                     runsAt: runsAt,
                     remainingNumberOfTries: 1,
-                    // tslint:disable-next-line:no-null-keyword
-                    lastTriedAt: null,
                     numberOfTried: 0,
                     executionResults: [],
                     data: {

@@ -9,8 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * ムビチケ使用タスク監視
- * 実際は何もしない
+ * Pecorinoインセンティブ返却
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
@@ -24,16 +23,23 @@ let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
 const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
+const authClient = new sskts.pecorinoapi.auth.ClientCredentials({
+    domain: process.env.PECORINO_AUTHORIZE_SERVER_DOMAIN,
+    clientId: process.env.PECORINO_API_CLIENT_ID,
+    clientSecret: process.env.PECORINO_API_CLIENT_SECRET,
+    scopes: [],
+    state: ''
+});
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
     }
     count += 1;
     try {
-        debug('count:', count);
-        yield sskts.service.task.executeByName(sskts.factory.taskName.UseMvtk)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.ReturnPointAward)({
             taskRepo: taskRepo,
-            connection: sskts.mongoose.connection
+            connection: sskts.mongoose.connection,
+            pecorinoAuthClient: authClient
         });
     }
     catch (error) {

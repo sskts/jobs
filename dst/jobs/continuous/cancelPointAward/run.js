@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Pecorinoインセンティブ入金実行
+ * Pecorinoインセンティブ承認取消
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
@@ -36,7 +36,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     }
     count += 1;
     try {
-        yield sskts.service.task.executeByName(sskts.factory.taskName.GivePecorinoAward)({
+        yield sskts.service.task.executeByName(sskts.factory.taskName.CancelPointAward)({
             taskRepo: taskRepo,
             connection: sskts.mongoose.connection,
             pecorinoAuthClient: authClient
