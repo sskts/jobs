@@ -13,30 +13,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
+const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:jobs');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const creativeWorkRepository = new sskts.repository.CreativeWork(sskts.mongoose.connection);
-        const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
+        yield mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        const creativeWorkRepository = new sskts.repository.CreativeWork(mongoose.connection);
+        const sellerRepo = new sskts.repository.Seller(mongoose.connection);
         // 全劇場組織を取得
-        const movieTheaters = yield organizationRepository.searchMovieTheaters({});
+        const sellers = yield sellerRepo.search({});
         // 劇場ごとに映画作品をインポート
-        for (const movieTheater of movieTheaters) {
-            const branchCode = movieTheater.location.branchCode;
-            try {
-                debug('importing movies...', branchCode);
-                yield sskts.service.masterSync.importMovies(branchCode)({ creativeWork: creativeWorkRepository });
-                debug('movies imported', branchCode);
-            }
-            catch (error) {
-                // tslint:disable-next-line:no-console
-                console.error(error);
+        for (const seller of sellers) {
+            if (seller.location !== undefined && seller.location.branchCode !== undefined) {
+                try {
+                    const branchCode = seller.location.branchCode;
+                    debug('importing movies...', branchCode);
+                    yield sskts.service.masterSync.importMovies(branchCode)({ creativeWork: creativeWorkRepository });
+                    debug('movies imported', branchCode);
+                }
+                catch (error) {
+                    // tslint:disable-next-line:no-console
+                    console.error(error);
+                }
             }
         }
-        yield sskts.mongoose.disconnect();
+        yield mongoose.disconnect();
     });
 }
 exports.main = main;

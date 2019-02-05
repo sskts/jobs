@@ -9,28 +9,30 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^27.0.0",
+    "@motionpicture/sskts-domain": "^28.0.0",
     "debug": "^3.2.6",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.9"
   },
   "description": "SSKTS Jobs Application",
   "devDependencies": {
     "@types/debug": "0.0.30",
     "@types/mocha": "^5.2.5",
+    "@types/mongoose": "^5.3.12",
     "@types/node": "^9.6.41",
     "@types/power-assert": "^1.5.0",
     "@types/sinon": "^4.3.3",
     "concurrently": "^3.6.1",
     "cpx": "^1.5.0",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
+    "nyc": "^13.2.0",
     "power-assert": "^1.6.1",
     "rimraf": "^2.6.3",
     "sinon": "^5.1.1",
     "ts-node": "^6.2.0",
     "tslint": "^5.12.1",
     "tslint-microsoft-contrib": "^6.0.0",
-    "typescript": "^3.2.4"
+    "typescript": "^3.3.1"
   },
   "engines": {
     "node": ">=8.0.0",
@@ -55,5 +57,5 @@
     "version": "git add -A",
     "postversion": "git push origin --tags"
   },
-  "version": "7.0.0"
+  "version": "8.0.0"
 }

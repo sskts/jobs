@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
+const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:jobs');
 /**
@@ -27,12 +28,12 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
-        const organizationRepo = new sskts.repository.Organization(sskts.mongoose.connection);
-        const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
+        yield mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        const placeRepo = new sskts.repository.Place(mongoose.connection);
+        const sellerRepo = new sskts.repository.Seller(mongoose.connection);
+        const taskRepo = new sskts.repository.Task(mongoose.connection);
         // 全劇場組織を取得
-        const movieTheaterOrganizations = yield organizationRepo.searchMovieTheaters({});
+        const sellers = yield sellerRepo.search({});
         const movieTheaters = yield placeRepo.searchMovieTheaters({});
         const importFrom = moment()
             .toDate();
@@ -42,22 +43,32 @@ function main() {
         const runsAt = new Date();
         yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const movieTheaterOrganization = movieTheaterOrganizations.find((m) => m.location.branchCode === movieTheater.branchCode);
-                if (movieTheaterOrganization !== undefined) {
+                const branchCode = movieTheater.branchCode;
+                const seller = sellers.find((m) => {
+                    return m.location !== undefined
+                        && m.location.branchCode !== undefined
+                        && m.location.branchCode === branchCode;
+                });
+                if (seller !== undefined) {
+                    let xmlEndPoint;
+                    if (Array.isArray(seller.additionalProperty)) {
+                        const xmlEndPointProperty = seller.additionalProperty.find(((p) => {
+                            return p.name === 'xmlEndPoint';
+                        }));
+                        xmlEndPoint = (xmlEndPointProperty !== undefined) ? JSON.parse(xmlEndPointProperty.value) : undefined;
+                    }
                     const taskAttributes = {
                         name: sskts.factory.taskName.ImportScreeningEvents,
                         status: sskts.factory.taskStatus.Ready,
                         runsAt: runsAt,
                         remainingNumberOfTries: 1,
-                        // tslint:disable-next-line:no-null-keyword
-                        lastTriedAt: null,
                         numberOfTried: 0,
                         executionResults: [],
                         data: {
-                            locationBranchCode: movieTheaterOrganization.location.branchCode,
+                            locationBranchCode: branchCode,
                             importFrom: importFrom,
                             importThrough: importThrough,
-                            xmlEndPoint: movieTheaterOrganization.xmlEndPoint
+                            xmlEndPoint: xmlEndPoint
                         }
                     };
                     yield taskRepo.save(taskAttributes);
@@ -71,7 +82,7 @@ function main() {
         })));
         yield new Promise((resolve) => {
             setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                yield sskts.mongoose.disconnect();
+                yield mongoose.disconnect();
                 resolve();
             }), 
             // tslint:disable-next-line:no-magic-numbers

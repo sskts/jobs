@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
 const moment = require("moment");
+const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:jobs');
 /**
@@ -27,7 +28,7 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
     : 1;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        yield mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
         const redisClient = sskts.redis.createClient({
             host: process.env.REDIS_HOST,
             // tslint:disable-next-line:no-magic-numbers
@@ -36,19 +37,20 @@ function main() {
             tls: { servername: process.env.REDIS_HOST }
         });
         const itemAvailabilityRepository = new sskts.repository.itemAvailability.ScreeningEvent(redisClient);
-        const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
+        const sellerRepo = new sskts.repository.Seller(mongoose.connection);
         // update by branchCode
-        const movieTheaters = yield organizationRepository.searchMovieTheaters({});
+        const sellers = yield sellerRepo.search({});
         const startFrom = moment()
             .toDate();
         const startThrough = moment()
             .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
             .toDate();
-        yield Promise.all(movieTheaters.map((movieTheater) => __awaiter(this, void 0, void 0, function* () {
+        yield Promise.all(sellers.map((seller) => __awaiter(this, void 0, void 0, function* () {
             try {
-                debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
-                yield sskts.service.itemAvailability.updateIndividualScreeningEvents(movieTheater.location.branchCode, startFrom, startThrough)({ itemAvailability: itemAvailabilityRepository });
-                debug('item availability updated');
+                if (seller.location !== undefined && seller.location.branchCode !== undefined) {
+                    yield sskts.service.itemAvailability.updateIndividualScreeningEvents(seller.location.branchCode, startFrom, startThrough)({ itemAvailability: itemAvailabilityRepository });
+                    debug('item availability updated');
+                }
             }
             catch (error) {
                 // tslint:disable-next-line:no-console
@@ -56,7 +58,7 @@ function main() {
             }
         })));
         redisClient.quit();
-        yield sskts.mongoose.disconnect();
+        yield mongoose.disconnect();
     });
 }
 main()

@@ -5,6 +5,7 @@
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as moment from 'moment';
+import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
@@ -20,7 +21,7 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
     : 1;
 
 async function main() {
-    await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    await mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const redisClient = sskts.redis.createClient({
         host: <string>process.env.REDIS_HOST,
@@ -31,24 +32,25 @@ async function main() {
     });
 
     const itemAvailabilityRepository = new sskts.repository.itemAvailability.ScreeningEvent(redisClient);
-    const organizationRepository = new sskts.repository.Organization(sskts.mongoose.connection);
+    const sellerRepo = new sskts.repository.Seller(mongoose.connection);
 
     // update by branchCode
-    const movieTheaters = await organizationRepository.searchMovieTheaters({});
+    const sellers = await sellerRepo.search({});
     const startFrom = moment()
         .toDate();
     const startThrough = moment()
         .add(LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS, 'weeks')
         .toDate();
-    await Promise.all(movieTheaters.map(async (movieTheater) => {
+    await Promise.all(sellers.map(async (seller) => {
         try {
-            debug('updating item availability...branchCode:', movieTheater.location.branchCode, startFrom, startThrough);
-            await sskts.service.itemAvailability.updateIndividualScreeningEvents(
-                movieTheater.location.branchCode,
-                startFrom,
-                startThrough
-            )({ itemAvailability: itemAvailabilityRepository });
-            debug('item availability updated');
+            if (seller.location !== undefined && seller.location.branchCode !== undefined) {
+                await sskts.service.itemAvailability.updateIndividualScreeningEvents(
+                    seller.location.branchCode,
+                    startFrom,
+                    startThrough
+                )({ itemAvailability: itemAvailabilityRepository });
+                debug('item availability updated');
+            }
         } catch (error) {
             // tslint:disable-next-line:no-console
             console.error(error);
@@ -56,7 +58,7 @@ async function main() {
     }));
 
     redisClient.quit();
-    await sskts.mongoose.disconnect();
+    await mongoose.disconnect();
 }
 
 main()
