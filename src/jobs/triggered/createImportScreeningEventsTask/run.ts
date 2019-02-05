@@ -4,6 +4,7 @@
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as moment from 'moment';
+import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
@@ -20,11 +21,11 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
 
 async function main() {
     debug('connecting mongodb...');
-    await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    await mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
-    const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
-    const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
-    const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
+    const placeRepo = new sskts.repository.Place(mongoose.connection);
+    const sellerRepo = new sskts.repository.Seller(mongoose.connection);
+    const taskRepo = new sskts.repository.Task(mongoose.connection);
 
     // 全劇場組織を取得
     const sellers = await sellerRepo.search({});
@@ -80,7 +81,7 @@ async function main() {
     await new Promise((resolve) => {
         setTimeout(
             async () => {
-                await sskts.mongoose.disconnect();
+                await mongoose.disconnect();
                 resolve();
             },
             // tslint:disable-next-line:no-magic-numbers

@@ -9,21 +9,23 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^28.0.0-alpha.10",
+    "@motionpicture/sskts-domain": "^28.0.0-alpha.11",
     "debug": "^3.2.6",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.9"
   },
   "description": "SSKTS Jobs Application",
   "devDependencies": {
     "@types/debug": "0.0.30",
     "@types/mocha": "^5.2.5",
+    "@types/mongoose": "^5.3.12",
     "@types/node": "^9.6.41",
     "@types/power-assert": "^1.5.0",
     "@types/sinon": "^4.3.3",
     "concurrently": "^3.6.1",
     "cpx": "^1.5.0",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
+    "nyc": "^13.2.0",
     "power-assert": "^1.6.1",
     "rimraf": "^2.6.3",
     "sinon": "^5.1.1",

@@ -3,12 +3,13 @@
  */
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
+import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
 const debug = createDebug('sskts-jobs:*');
 
-sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions)
+mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions)
     .then(debug)
     // tslint:disable-next-line:no-console
     .catch(console.error);
@@ -18,7 +19,7 @@ let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 1000;
 const RETRY_INTERVAL_MINUTES = 10;
-const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
+const taskRepo = new sskts.repository.Task(mongoose.connection);
 
 setInterval(
     async () => {

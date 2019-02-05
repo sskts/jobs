@@ -13,14 +13,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
+const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:jobs');
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         debug('connecting mongodb...');
-        yield sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
-        const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
-        const placeRepo = new sskts.repository.Place(sskts.mongoose.connection);
+        yield mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default);
+        const sellerRepo = new sskts.repository.Seller(mongoose.connection);
+        const placeRepo = new sskts.repository.Place(mongoose.connection);
         // 全劇場組織を取得
         const sellers = yield sellerRepo.search({});
         for (const seller of sellers) {
@@ -40,7 +41,7 @@ function main() {
                 }
             }
         }
-        yield sskts.mongoose.disconnect();
+        yield mongoose.disconnect();
     });
 }
 main()

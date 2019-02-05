@@ -13,17 +13,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
+const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
     .then(debug)
     // tslint:disable-next-line:no-console
     .catch(console.error);
 let countExecute = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 10;
 const INTERVAL_MILLISECONDS = 200;
-const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
-const transactionRepository = new sskts.repository.Transaction(sskts.mongoose.connection);
+const taskRepo = new sskts.repository.Task(mongoose.connection);
+const transactionRepository = new sskts.repository.Transaction(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (countExecute > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;

@@ -5,6 +5,7 @@
 import * as sskts from '@motionpicture/sskts-domain';
 import * as createDebug from 'debug';
 import * as moment from 'moment';
+import * as mongoose from 'mongoose';
 
 import mongooseConnectionOptions from '../../../mongooseConnectionOptions';
 
@@ -20,7 +21,7 @@ const LENGTH_IMPORT_SCREENING_EVENTS_IN_WEEKS = (process.env.LENGTH_IMPORT_SCREE
     : 1;
 
 async function main() {
-    await sskts.mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
+    await mongoose.connect(<string>process.env.MONGOLAB_URI, mongooseConnectionOptions);
 
     const redisClient = sskts.redis.createClient({
         host: <string>process.env.REDIS_HOST,
@@ -31,7 +32,7 @@ async function main() {
     });
 
     const itemAvailabilityRepository = new sskts.repository.itemAvailability.ScreeningEvent(redisClient);
-    const sellerRepo = new sskts.repository.Seller(sskts.mongoose.connection);
+    const sellerRepo = new sskts.repository.Seller(mongoose.connection);
 
     // update by branchCode
     const sellers = await sellerRepo.search({});
@@ -57,7 +58,7 @@ async function main() {
     }));
 
     redisClient.quit();
-    await sskts.mongoose.disconnect();
+    await mongoose.disconnect();
 }
 
 main()

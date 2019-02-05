@@ -13,15 +13,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const sskts = require("@motionpicture/sskts-domain");
 const createDebug = require("debug");
+const mongoose = require("mongoose");
 const mongooseConnectionOptions_1 = require("../../../mongooseConnectionOptions");
 const debug = createDebug('sskts-jobs:*');
-sskts.mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
+mongoose.connect(process.env.MONGOLAB_URI, mongooseConnectionOptions_1.default)
     .then(debug) // tslint:disable-next-line:no-console
     .catch(console.error);
 let count = 0;
 const MAX_NUBMER_OF_PARALLEL_TASKS = 0;
 const INTERVAL_MILLISECONDS = 100;
-const taskRepo = new sskts.repository.Task(sskts.mongoose.connection);
+const taskRepo = new sskts.repository.Task(mongoose.connection);
 setInterval(() => __awaiter(this, void 0, void 0, function* () {
     if (count > MAX_NUBMER_OF_PARALLEL_TASKS) {
         return;
@@ -30,7 +31,7 @@ setInterval(() => __awaiter(this, void 0, void 0, function* () {
     try {
         yield sskts.service.task.executeByName(sskts.factory.taskName.ImportScreeningEvents)({
             taskRepo: taskRepo,
-            connection: sskts.mongoose.connection
+            connection: mongoose.connection
         });
     }
     catch (error) {
