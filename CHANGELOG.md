@@ -10,6 +10,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## v8.0.0 - 2019-02-05
+
+### Changed
+
 - 組織のxmlEndPointをadditionalPropertyから読み出すように変更
 - install @motionpicture/sskts-domain@28.0.0
 - タスク名をCinerinoに統一
@@ -21,14 +33,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - イベントインターフェースをCinerinoに統一
 - 予約インターフェースをCinerinoに統一
 - 注文インターフェースをCinerinoに統一
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 ## v7.0.0 - 2019-01-28
 
