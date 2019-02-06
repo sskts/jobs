@@ -50,13 +50,6 @@ function main() {
                         && m.location.branchCode === branchCode;
                 });
                 if (seller !== undefined) {
-                    let xmlEndPoint;
-                    if (Array.isArray(seller.additionalProperty)) {
-                        const xmlEndPointProperty = seller.additionalProperty.find(((p) => {
-                            return p.name === 'xmlEndPoint';
-                        }));
-                        xmlEndPoint = (xmlEndPointProperty !== undefined) ? JSON.parse(xmlEndPointProperty.value) : undefined;
-                    }
                     const taskAttributes = {
                         name: sskts.factory.taskName.ImportScreeningEvents,
                         status: sskts.factory.taskStatus.Ready,
@@ -67,8 +60,7 @@ function main() {
                         data: {
                             locationBranchCode: branchCode,
                             importFrom: importFrom,
-                            importThrough: importThrough,
-                            xmlEndPoint: xmlEndPoint
+                            importThrough: importThrough
                         }
                     };
                     yield taskRepo.save(taskAttributes);
