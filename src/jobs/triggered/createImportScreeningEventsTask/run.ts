@@ -47,14 +47,6 @@ async function main() {
             });
 
             if (seller !== undefined) {
-                let xmlEndPoint: any;
-                if (Array.isArray((<any>seller).additionalProperty)) {
-                    const xmlEndPointProperty = (<any>seller).additionalProperty.find(((p: any) => {
-                        return p.name === 'xmlEndPoint';
-                    }));
-                    xmlEndPoint = (xmlEndPointProperty !== undefined) ? JSON.parse(xmlEndPointProperty.value) : undefined;
-                }
-
                 const taskAttributes: sskts.factory.task.IAttributes<sskts.factory.taskName.ImportScreeningEvents> = {
                     name: sskts.factory.taskName.ImportScreeningEvents,
                     status: sskts.factory.taskStatus.Ready,
@@ -65,8 +57,7 @@ async function main() {
                     data: {
                         locationBranchCode: branchCode,
                         importFrom: importFrom,
-                        importThrough: importThrough,
-                        xmlEndPoint: xmlEndPoint
+                        importThrough: importThrough
                     }
                 };
                 await taskRepo.save(taskAttributes);
