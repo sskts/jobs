@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v8.0.2 - 2019-02-07
+
+### Changed
+
+- 上映イベントに、スクリーン座席数を最大収容人数としてセット
+
 ## v8.0.1 - 2019-02-06
 
 ### Changed
