@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 
 - 所有権インターフェースをCinerinoに統一
+- 映画作品インポートジョブのスケジュール変更
 
 ### Deprecated
 
