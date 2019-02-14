@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v8.0.3 - 2019-02-14
+
+### Changed
+
+- 所有権インターフェースをCinerinoに統一
+- 映画作品インポートジョブのスケジュール変更
+
 ## v8.0.2 - 2019-02-07
 
 ### Changed
