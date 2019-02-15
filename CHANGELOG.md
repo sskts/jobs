@@ -16,9 +16,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Fixed
 
-- 会員プログラムの返品処理が動作しないバグを解消
-
 ### Security
+
+## v8.0.4 - 2019-02-15
+
+### Fixed
+
+- 会員プログラムの返品処理が動作しないバグを解消
 
 ## v8.0.3 - 2019-02-14
 
