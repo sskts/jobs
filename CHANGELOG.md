@@ -10,8 +10,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
-- 会員プログラムの注文返品時に会員プログラム更新タスクを中止するように変更
-
 ### Deprecated
 
 ### Removed
@@ -19,6 +17,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v8.0.5 - 2019-02-16
+
+### Changed
+
+- 会員プログラムの注文返品時に会員プログラム更新タスクを中止するように変更
 
 ## v8.0.4 - 2019-02-15
 
