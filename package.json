@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "@motionpicture/sskts-domain": "^29.0.1",
+    "@motionpicture/sskts-domain": "^29.0.2",
     "debug": "^3.2.6",
     "moment": "^2.24.0",
     "mongoose": "^5.4.9"
